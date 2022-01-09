@@ -5,11 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta
-            name="description"
-            content="Documentation for the Kittn API"
-        >
-    <title>API Reference</title>
+    <title>API Documentation</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -288,14 +284,11 @@
     </style>
     <link href="stylesheets/screen-c9d8fa83.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all-b12a2749.js"></script>
+      <script src="javascripts/all_nosearch-18c3ed8e.js"></script>
 
-    <script>
-      $(function() { setupCodeCopy(); });
-    </script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -304,295 +297,597 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo-1e815a84.png" class="logo" alt="" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
-        </div>
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
-          </li>
-          <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
-                  </li>
-                  <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
-                  </li>
-                  <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#unofficial-presonus-studiolive-iii-api" class="toc-h2 toc-link" data-title="Unofficial PreSonus StudioLive III API">Unofficial PreSonus StudioLive III API</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+            <a href="#packet" class="toc-h1 toc-link" data-title="PACKET">PACKET</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#presonus-studiolive-iii-packet-research" class="toc-h2 toc-link" data-title="PreSonus StudioLive III | Packet Research">PreSonus StudioLive III | Packet Research</a>
+                  </li>
+                  <li>
+                    <a href="#general" class="toc-h2 toc-link" data-title="General">General</a>
+                  </li>
+                  <li>
+                    <a href="#response-packets" class="toc-h2 toc-link" data-title="Response Packets">Response Packets</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#protocol" class="toc-h1 toc-link" data-title="PROTOCOL">PROTOCOL</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#presonus-studiolive-iii-protocol-research" class="toc-h2 toc-link" data-title="PreSonus StudioLive III | Protocol Research">PreSonus StudioLive III | Protocol Research</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#values-2" class="toc-h1 toc-link" data-title="VALUES">VALUES</a>
           </li>
       </ul>
-        <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/slatedocs/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
+        <h1 id='api'>API</h1><h2 id='unofficial-presonus-studiolive-iii-api'>Unofficial PreSonus StudioLive III API</h2>
 <blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>A Node.js API to interface with PreSonus&#39; StudioLive III consoles over the network. Read more <a href="https://featherbear.cc/presonus-studiolive-api/">here</a></p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<hr>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Page currently under construction</p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<!-- ...
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+`const { Client, MessageTypes } = require('presonus-studiolive-api')`
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+## Documentation
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+* `new Client(host: int, port: int)`  
+Creates a Client object that will later connect to the console at `host`:`port`
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
+* `client.connect()`  
+Connect to the console
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+* `client.listen()`  
+Start the metering server
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+* `client.stop()`  
+Stop the metering server
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+* `client.setUDPServerPort(port: int)`  
+Set the listen port of the metering server.  
+Can only be run while the metering server is not running
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint retrieves a specific kitten.</p>
+* `client.on(evtName: str, fn: function)`  
+Listen for `evtName` events that will call `fn`
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+* `client.sendList(path: str)`  
+Request `path` from the console
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+### Events
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
-  <span class="nt">-X</span> DELETE <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
+#### Protocol Events
 
-<p>The Kittn API uses the following error codes:</p>
+* `Hello`
+* `JSON`
+* `Setting`
+* `Settings2`
+* `FileResource`
+* `FileResource2`
+* `CompressedUnknown`
+
+#### Custom Events
+
+* `connected` - Emitted when the client has successfully connected to the console
+* `listening` - Emitted when the client has successfully started the meter server
+* `meter` | `meterData` - Emitted when metering data is received
+
+### Low(er) level access
+
+* `client.emit(evtName: str, ...data)`  
+Emits an event for `evtName` with `data`
+
+* `client._sendPacket(messageCode: bytes[2], data, <customA>, <customB>)`  
+Sends a packet to the server, messageCode is a two byte long string.  
+`customA` is an optional single byte character  
+`customB` is an optional single byte character  
+
+* `client.conn` => TCP socket connection
+
+### Metering
+
+Metering is currently unavailable in the Node.js version -->
+
+<!-- Metering data is stored as a dictionary -->
+
+<!-- ```
+{
+  input: [..., ..., ... /* 32 */], // Input signal
+  chain1input: input
+  chain1output: [..., ..., ... /* 32 */], // First FX chain
+  chain2input: chain1output,
+  chain2output: [..., ..., ... /* 32 */], // Second FX chain
+  chain3input: chain2output,
+  chain3output: [..., ..., ... /* 32 */], // Third FX chain
+  chain4input: chain3output,
+  chain4output: [..., ..., ... /* 32 */], // Fourth FX chain
+  level: chain4output
+}
+``` -->
+
+<hr>
+<h3 id='license'>License</h3>
+<p>Copyright © 2019 - 2022 <a href="https://featherbear.cc">Andrew Wong</a>  </p>
+
+<p>This software is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.<br>
+You are free to redistribute it and/or modify it under the <a href="https://opensource.org/licenses/MIT">terms</a> of the <a href="https://opensource.org/licenses/MIT">license</a>.</p>
+<h1 id='packet'>PACKET</h1>
+<p>[UC Surface]: https://www.presonus.com/products/UC-Surface</p>
+<h2 id='presonus-studiolive-iii-packet-research'>PreSonus StudioLive III | Packet Research</h2>
+<hr>
+<h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
+<p>All packets start with the four bytes <code>\x55\x43\x00\x01</code> (UC..)</p>
+<h3 id='payload-types'>Payload Types</h3>
+<p>There are different formats of payloads, identified by a two byte preamble preceding the payload data</p>
 
 <table><thead>
 <tr>
-<th>Error Code</th>
-<th>Meaning</th>
+<th style="text-align: left">Code</th>
+<th style="text-align: left">Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
+<td style="text-align: left"><code>KA</code></td>
+<td style="text-align: left">KeepAlive</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td style="text-align: left"><code>UM</code></td>
+<td style="text-align: left">Hello</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td style="text-align: left"><code>JM</code></td>
+<td style="text-align: left">JSON</td>
 </tr>
 <tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td style="text-align: left"><code>PV</code></td>
+<td style="text-align: left">Setting</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td style="text-align: left"><code>PL</code></td>
+<td style="text-align: left">Device List</td>
 </tr>
 <tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
+<td style="text-align: left"><code>FR</code></td>
+<td style="text-align: left">File Request</td>
 </tr>
 <tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
+<td style="text-align: left"><code>FD</code></td>
+<td style="text-align: left">FileResource 2</td>
 </tr>
 <tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
+<td style="text-align: left"><code>BO</code></td>
+<td style="text-align: left">?????????</td>
 </tr>
 <tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td style="text-align: left"><code>CK</code></td>
+<td style="text-align: left">Compressed Data ??????</td>
 </tr>
 <tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td style="text-align: left"><code>ZB</code></td>
+<td style="text-align: left">ZLIB Compressed Data</td>
 </tr>
 </tbody></table>
+<h3 id='payload-packing'>Payload Packing</h3>
+<p>In most situations, the packet is sent as follows</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Header</th>
+<th style="text-align: center">Payload Size</th>
+<th style="text-align: center">Payload Type</th>
+<th style="text-align: center">Payload Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>\x55\x43\x00\x01</code></td>
+<td style="text-align: center">2-byte LE</td>
+<td style="text-align: center">2-byte code</td>
+<td style="text-align: center">data</td>
+</tr>
+</tbody></table>
+
+<p>Note: <code>Payload Size = length(Payload Type) + length(Payload Data)</code></p>
+<h3 id='c-bytes'>C-Bytes</h3>
+<p>There are four bytes that appear after the payload type in the payload data.
+The first and third positions have some byte value [<code>0x6a</code>, <code>0x68</code>, <code>0x65</code>], with the other positions being NULL.</p>
+
+<p>i.e. <code>68 00 65 00</code>, or <code>6a 00 65 00</code></p>
+
+<p>I will refer to this group of four bytes as <strong>C-Bytes</strong> (custom bytes).<br>
+The first byte will be known as <strong>C-Byte A</strong> and the third as <strong>C-Byte B</strong></p>
+
+<p>They seem to be used for signalling and matching responses to requests.<br>
+<em>i.e (hypothetically) If a message is sent with <code>C-Byte A = j</code>, <code>C-Byte B = e</code> a response will be sent containing <code>C-Byte A = e</code>, <code>C-Byte B = j</code> so that the response can be matched with the request.</em></p>
+
+<p>For most cases it looks like they&#39;re not too important to keep synchronised - But as I keep researching and developing this API, I might find the need to actually implement proper request matching</p>
+<h3 id='hello'>Hello</h3>
+<blockquote>
+<p>The first packet that gets sent to the console</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 08 00 55 4d 00 00 65 00 15 fa   UC....UM..e...
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: left">Note</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Payload Size</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">6-7</td>
+<td style="text-align: left">Payload Type</td>
+<td style="text-align: left"><code>UM</code></td>
+</tr>
+<tr>
+<td style="text-align: left">8-11</td>
+<td style="text-align: left">C-Bytes</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">12-&gt;13</td>
+<td style="text-align: left">Payload Data</td>
+<td style="text-align: left"><code>TCP Window Size + 1</code> ???</td>
+</tr>
+</tbody></table>
+<h3 id='subscribe'>Subscribe</h3>
+<blockquote>
+<p>Register the client to the console</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 fe 00 4a 4d 6a 00 65 00 f4 00 00 00   UC....JMj.e.....
+7b 22 69 64 22 3a 20 22 53 75 62 73 63 72 69 62   {"id": "Subscrib
+65 22 2c 22 63 6c 69 65 6e 74 4e 61 6d 65 22 3a   e","clientName":
+20 22 55 6e 69 76 65 72 73 61 6c 20 43 6f 6e 74    "Universal Cont
+72 6f 6c 22 2c 22 63 6c 69 65 6e 74 49 6e 74 65   rol","clientInte
+72 6e 61 6c 4e 61 6d 65 22 3a 20 22 75 63 61 70   rnalName": "ucap
+70 22 2c 22 63 6c 69 65 6e 74 54 79 70 65 22 3a   p","clientType":
+20 22 50 43 22 2c 22 63 6c 69 65 6e 74 44 65 73    "PC","clientDes
+63 72 69 70 74 69 6f 6e 22 3a 20 22 46 45 41 54   cription": "FEAT
+48 45 52 4e 45 54 2d 50 43 22 2c 22 63 6c 69 65   HERNET-PC","clie
+6e 74 49 64 65 6e 74 69 66 69 65 72 22 3a 20 22   ntIdentifier": "
+46 45 41 54 48 45 52 4e 45 54 2d 50 43 22 2c 22   FEATHERNET-PC","
+63 6c 69 65 6e 74 4f 70 74 69 6f 6e 73 22 3a 20   clientOptions": 
+22 70 65 72 6d 20 75 73 65 72 73 20 6c 65 76 6c   "perm users levl
+20 72 65 64 75 20 72 74 61 6e 22 2c 22 63 6c 69    redu rtan","cli
+65 6e 74 45 6e 63 6f 64 69 6e 67 22 3a 20 32 33   entEncoding": 23
+31 30 36 7d                                       106}
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: left">Note</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Payload Size</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">6-7</td>
+<td style="text-align: left">Payload Type</td>
+<td style="text-align: left"><code>JM</code></td>
+</tr>
+<tr>
+<td style="text-align: left">8-&gt;11</td>
+<td style="text-align: left">C-Bytes</td>
+<td style="text-align: left"><code>6a 00 65 00</code></td>
+</tr>
+<tr>
+<td style="text-align: left">12-15</td>
+<td style="text-align: left">JSON Size</td>
+<td style="text-align: left">4-byte LE</td>
+</tr>
+<tr>
+<td style="text-align: left">16-&gt;?</td>
+<td style="text-align: left">JSON Data</td>
+<td style="text-align: left"></td>
+</tr>
+</tbody></table>
+
+<p>The console will reply with a response JSON payload (<code>{&quot;id&quot;: &quot;SubscriptionReply&quot;}</code>), and additionally a ZLIB payload</p>
+<h4 id='json-fields'>JSON Fields</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Key</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: left">Known Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code>id</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">Action</td>
+<td style="text-align: left"><code>&quot;Subscribe&quot;</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientName</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">Name</td>
+<td style="text-align: left"><code>&quot;Universal Control&quot;</code>/<code>&quot;UC-Surface&quot;</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientInternalName</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">Internal name</td>
+<td style="text-align: left"><code>&quot;ucapp&quot;</code>/<code>&quot;ucremoteapp&quot;</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientType</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">Client platform</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientDescription</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">Visible name</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientIdentifier</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">ID</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientOptions</code></td>
+<td style="text-align: left"><em>string</em></td>
+<td style="text-align: left">???</td>
+<td style="text-align: left"><code>&quot;perm users levl redu rtan&quot;</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>clientEncoding</code></td>
+<td style="text-align: left"><em>integer</em></td>
+<td style="text-align: left">???</td>
+<td style="text-align: left"><code>23106</code></td>
+</tr>
+</tbody></table>
+<h3 id='file-request'>File Request</h3>
+<!-- TODO: What is a file? -->
+
+<blockquote>
+<p>Request a file from the console. File path is terminated with a NULL character.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 1d 00 46 52 6a 00 65 00 01 00 4c 69   UC....FRj.e...Li
+73 74 70 72 65 73 65 74 73 2f 63 68 61 6e 6e 65   stpresets/channe
+6c 00 00                                          l..
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: left">Note</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Payload Size</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">6-7</td>
+<td style="text-align: left">Payload Type</td>
+<td style="text-align: left"><code>FR</code></td>
+</tr>
+<tr>
+<td style="text-align: left">8-&gt;11</td>
+<td style="text-align: left">C-Bytes</td>
+<td style="text-align: left"><code>6a 00 65 00</code></td>
+</tr>
+<tr>
+<td style="text-align: left">12-13</td>
+<td style="text-align: left">??</td>
+<td style="text-align: left"><code>01 00</code></td>
+</tr>
+<tr>
+<td style="text-align: left">14-&gt;?</td>
+<td style="text-align: left">Request path</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">?-&gt;?</td>
+<td style="text-align: left">Null byte</td>
+<td style="text-align: left"></td>
+</tr>
+</tbody></table>
+<h3 id='zlib-compressed-data'>ZLIB Compressed Data</h3>
+<p><code>ZB</code> payloads contain a zlib-compressed copy of the mixer state.<br>
+These payloads have their own 4-byte little-endian size header.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+<th style="text-align: left">Note</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Payload Size</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">6-7</td>
+<td style="text-align: left">Payload Type</td>
+<td style="text-align: left"><code>ZB</code></td>
+</tr>
+<tr>
+<td style="text-align: left">8-&gt;11</td>
+<td style="text-align: left">Compressed Payload Size (LE)</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">12-?</td>
+<td style="text-align: left">Compressed Payload</td>
+<td style="text-align: left"></td>
+</tr>
+</tbody></table>
+
+<p>The decompressed payload is stored in a type-prefixed and length-prefixed dictionary, delimited by an <code>i</code> (<code>0x69</code>) character.  </p>
+<h4 id='keys'>Keys</h4>
+<p>Keys are prefixed with <code>i_</code> where <code>_</code> is the key string length.</p>
+
+<blockquote>
+<p>e.g. <code>i(0x05)ABCDE</code> is the key <code>ABCDE</code> (length 5)</p>
+</blockquote>
+<h4 id='values'>Values</h4>
+<ul>
+<li><code>Si_XXXXX</code> - String of length <code>_</code> (0-255), values contained in <code>XXXXX</code></li>
+<li><code>dXXXX</code> - 32-bit integer (signedness unknown), value in <code>XXXX</code></li>
+<li><code>iX</code> - Single byte (signedness unknown), value in <code>X</code></li>
+<li><code>{...}</code> - Dictionary</li>
+<li><code>[...]</code> - Array (TBC: only of strings???)</li>
+</ul>
+
+<p>Example decompressed payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.dump">zlib.dump</a><br>
+Example decoded payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed">zlib.parsed</a></p>
+
+<hr>
+<h2 id='response-packets'>Response Packets</h2>
+<p>(Maybe they&#39;re the same?)</p>
+<h3 id='settings'>Settings</h3>
+<p>Setting packets have a payload type code of <code>0x50 0x56</code> (<code>PV</code>).</p>
+<h4 id='format'>Format</h4>
+<blockquote>
+<p><strong>key</strong> + <code>\x00</code> + <code>partA</code> (+ <code>partB</code>)</p>
+</blockquote>
+
+<ul>
+<li><code>key</code> - The name of the setting value</li>
+<li><code>partA</code> - <code>0x00 0x00</code> or <code>0x00 0x01</code></li>
+<li><code>partB</code> -  Optional 4-byte value</li>
+</ul>
+
+<p>For most responses, <code>partA</code> is <code>0x00 0x00</code>, and <code>partB</code> is appended.<br>
+However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x01</code> and <code>partB</code> is omitted.</p>
+<h3 id='discovery'>Discovery</h3>
+<p><strong>Note: Discovery packets do not follow the standard packet packing format</strong></p>
+
+<blockquote>
+<p>Every <strong>3 seconds</strong>, the console will broadcast a UDP packet (from port <code>53000</code>) to <code>255.255.255.255:47809</code>.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 08 cf 44 41 65 00 00 00 00 04 00 80   UC....DAe.......
+48 1c 48 67 23 60 51 4f 92 4e 1e 46 91 50 51 d1   H.Hg#`QO.N.F.PQ.
+53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00 41   StudioLive 24R.A
+55 44 00 52 41 32 45 31 38 30 33 30 32 32 36 00   UD.RA2E18030226.
+53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00      StudioLive 24R.
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Source Port (2 byte little endian)</td>
+</tr>
+<tr>
+<td style="text-align: left">6-23</td>
+<td style="text-align: left">???</td>
+</tr>
+<tr>
+<td style="text-align: left">24-&gt;?</td>
+<td style="text-align: left">Console Model*</td>
+</tr>
+</tbody></table>
+
+<p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in [UC Surface]. The second instance appears to be some sort of friendly name</p>
+
+<blockquote>
+<p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 07 c2 44 51 00 00 65 00  UC....DQ..e.
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 00 00 44 51 00 00 65 00  UC....DQ..e.
+</code></pre></div><h1 id='protocol'>PROTOCOL</h1><h2 id='presonus-studiolive-iii-protocol-research'>PreSonus StudioLive III | Protocol Research</h2>
+<!-- 
+
+### Overview
+
+Discovery Broadcast - every 3 seconds
+KeepAlive - every n second ???
+
+Connection Order -> Hello, Subscribe, Request File
+
+UDP packets metering, discovery
+TCP for control
+
+-->
+<h1 id='values-2'>VALUES</h1>
+<p>Listpresets/channel</p>
+
+<p>/// 
+Resp as PV</p>
+
+<p>permissions/mix_permissions
+permissions/rename
+permissions/channel_source
+permissions/preamps
+permissions/assigns
+permissions/scenes
+permissions/mute_groups
+permissions/channel_type
+permissions/eq_dyn
+permissions/geq
+permissions/fx
+permissions/groups</p>
 
       </div>
       <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
-          </div>
       </div>
     </div>
   </body>
