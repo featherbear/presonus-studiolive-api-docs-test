@@ -524,6 +524,8 @@ client.on("JM", (evt) =&gt; {
 <td style="text-align: left">Time the device was (last) discovered</td>
 </tr>
 </tbody></table>
+
+<p><strong>See <a href="#discovery">Discovery</a></strong></p>
 <h3 id='enum-channeltypes'>enum:<code>CHANNELTYPES</code></h3>
 <ul>
 <li><code>LINE</code></li>
@@ -578,6 +580,8 @@ someFunctionThatTakesInAChannelSelector({
     <span class="nx">meterData</span><span class="p">.</span><span class="nx">main</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1">// Left channel signal meter for main output</span>
     <span class="nx">meterData</span><span class="p">.</span><span class="nx">main</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1">// Right channel signal meter for main output</span>
 <span class="p">})</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">meterSubscribe</span><span class="p">()</span>
 </code></pre></div>
 <ul>
 <li><code>input</code> - <code>number[]</code> - Input channel meters</li>
@@ -627,8 +631,12 @@ someFunctionThatTakesInAChannelSelector({
 </ul></li>
 </ul>
 
+<p><strong>See <a href="#metering">Metering</a></strong></p>
+
 <p><a name="22-eventsmd"></a></p>
-<h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
+<h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
+
+<span class="c1">// Listen for changes to settings</span>
 <span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">Setting</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
 <span class="p">})</span>
@@ -648,10 +656,16 @@ someFunctionThatTakesInAChannelSelector({
 <li>To listen to <strong>all events</strong>, you can listen to the <code>data</code> event</li>
 <li>To listen to <strong>meter events</strong>, you can listen to the <code>meter</code> event (see <a href="#metering">Metering</a>)</li>
 </ul>
-<h3 id='lifecycle-events'>Lifecycle Events</h3>
-<ul>
-<li>To trigger a function when client has successfully connected to the console, listen to the <code>connected</code> event</li>
-</ul>
+<h3 id='lifecycle-events'>Lifecycle Events</h3><div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connected</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Connected to the device!</span><span class="dl">"</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>
+<p>To trigger a function when client has successfully connected to the console, listen to the <code>connected</code> event.  </p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Also connected to the device!)
+})
+</span></code></pre></div>
+<p>Note: The <code>&lt;Client&gt;.connect(...)</code> function returns a Promise and is therefore thenable, so you may simply just use <code>.then(cb)</code> to continue execution after connection</p>
 
 <p><a name="23-client-apimd"></a></p>
 <h2 id='client-api'>Client API</h2>
@@ -725,7 +739,11 @@ Attach a handler function <code>fn</code> to an event given by <code>evtName</co
 See <a href="#events">Events</a></p>
 
 <p><a name="23-meteringmd"></a></p>
-<h2 id='metering'>Metering</h2>
+<h2 id='metering'>Metering</h2><div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">meter</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">metering</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">metering</span><span class="p">.</span><span class="nx">input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">})</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">meterSubscribe</span><span class="p">()</span>
+</code></pre></div>
 <p><code>&lt;Client&gt;.on(&#39;meter&#39;, Function&lt;MeterData&gt;)</code><br>
 Listen to meter events</p>
 
@@ -734,11 +752,9 @@ Start the metering server</p>
 
 <p><code>&lt;Client&gt;.stop()</code><br>
 Stop the metering server</p>
-<div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">meter</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">metering</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">metering</span><span class="p">.</span><span class="nx">input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="p">})</span>
-<span class="nx">client</span><span class="p">.</span><span class="nx">meterSubscribe</span><span class="p">()</span>
-</code></pre></div>
+
+<p><strong>See <a href="#type-meterdata">type:<code>MeterData</code></a></strong></p>
+
 <p><a name="24-device-statemd"></a></p>
 <h2 id='device-state'>Device State</h2><div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_name</span><span class="dl">'</span><span class="p">)</span>
 <span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">line.ch1.mute</span><span class="dl">'</span><span class="p">)</span>
