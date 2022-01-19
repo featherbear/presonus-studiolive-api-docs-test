@@ -418,7 +418,8 @@
 </tr>
 </tbody></table>
 
-<p>Used during connection to configure client identity</p>
+<p>Used during API client connection to configure identity.<br>
+If using multiple instances of this API, it is recommended to modify the <code>clientIdentifier</code> property</p>
 <h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
 
 <span class="c1">// ...</span>
@@ -497,14 +498,14 @@
 <blockquote>
 <p>Example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="p">{</span>
-    <span class="nl">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">StudioLive 16R</span><span class="dl">"</span><span class="p">,</span>
-    <span class="nx">serial</span><span class="p">:</span> <span class="dl">"</span><span class="s2">RA1E21060260</span><span class="dl">"</span><span class="p">,</span>
-    <span class="nx">ip</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10.0.0.18</span><span class="dl">"</span><span class="p">,</span>
-    <span class="nx">port</span><span class="p">:</span> <span class="mi">53000</span><span class="p">,</span>
-    <span class="nx">timestamp</span><span class="p">:</span> <span class="p">[</span><span class="nb">Date</span> <span class="nx">object</span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StudioLive 16R"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RA1E21060260"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.0.0.18"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">Date</span><span class="w"> </span><span class="err">object</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <table><thead>
 <tr>
 <th style="text-align: center">Property</th>
@@ -555,6 +556,16 @@
     <span class="na">channel</span><span class="p">:</span> <span class="mi">13</span>
 <span class="p">})</span>
 </code></pre></div>
+<blockquote>
+<p>or</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
+
+<span class="nx">someFunctionThatTakesInAChannelSelector</span><span class="p">({</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LINE</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">channel</span><span class="p">:</span> <span class="nx">CHANNELS</span><span class="p">.</span><span class="nx">LINE</span><span class="p">.</span><span class="nx">CHANNEL_13</span>
+<span class="p">})</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th style="text-align: center">Property</th>
@@ -575,13 +586,7 @@
 </tbody></table>
 
 <p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
 
-someFunctionThatTakesInAChannelSelector({
-    type: </span><span class="dl">'</span><span class="nx">LINE</span><span class="dl">'</span><span class="s1">,
-    channel: CHANNELS.LINE.CHANNEL_13
-})
-</span></code></pre></div>
 <p><code>channel</code> values can also be sourced from the <code>CHANNELS</code> enum</p>
 <h3 id='type-meterdata'>type:<code>MeterData</code></h3>
 <blockquote>
@@ -648,7 +653,9 @@ someFunctionThatTakesInAChannelSelector({
 <p><strong>See <a href="#metering">Metering</a></strong></p>
 
 <p><a name="22-eventsmd"></a></p>
-<h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
+<h2 id='events'>Events</h2>
+<p>Events are split into data events and lifecycle events.  </p>
+<h3 id='data-events'>Data Events</h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
 
 <span class="c1">// Listen for changes to settings</span>
 <span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">Setting</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
@@ -663,14 +670,19 @@ someFunctionThatTakesInAChannelSelector({
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div>
-<p>Events are split into data events and lifecycle events.  </p>
+<p>Specific events can be listened to by attaching an event handler with <code>&lt;Client&gt;.on(type, callback)</code>.<br>
+A list of possible event types are given in <a href="#enum-messagetypes">enum:<code>MESSAGETYPES</code></a>.</p>
 
-<ul>
-<li>Callbacks / handlers can be applied onto specific events, given by their <a href="#enum-messagetypes">message type</a>.</li>
-<li>To listen to <strong>all events</strong>, you can listen to the <code>data</code> event</li>
-<li>To listen to <strong>meter events</strong>, you can listen to the <code>meter</code> event (see <a href="#metering">Metering</a>)</li>
-</ul>
-<h3 id='lifecycle-events'>Lifecycle Events</h3><div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connected</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<p>To listen to <strong>all events</strong>, attach an event handler to the <code>data</code> event.<br>
+This event will be emitted after the specific event is emitted.</p>
+
+<p>To listen to <strong>meter events</strong>, attach an event handler to the <code>meter</code> event.<br>
+See <a href="#metering">Metering</a></p>
+<h3 id='lifecycle-events'>Lifecycle Events</h3>
+<blockquote>
+<p>Lifecycle Events</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connected</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Connected to the device!</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div>
