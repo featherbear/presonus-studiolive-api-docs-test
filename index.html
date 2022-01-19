@@ -403,51 +403,21 @@
 <td style="text-align: left">Identifier</td>
 </tr>
 </tbody></table>
-<h3 id='type-discoverytype'>type:<code>DiscoveryType</code></h3>
-<table><thead>
-<tr>
-<th style="text-align: center">Property</th>
-<th style="text-align: center">Type</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center"><code>name</code></td>
-<td style="text-align: center"><code>string</code></td>
-<td style="text-align: left">Device model</td>
-</tr>
-<tr>
-<td style="text-align: center"><code>serial</code></td>
-<td style="text-align: center"><code>string</code></td>
-<td style="text-align: left">Device serial</td>
-</tr>
-<tr>
-<td style="text-align: center"><code>ip</code></td>
-<td style="text-align: center"><code>string</code></td>
-<td style="text-align: left">Device IP</td>
-</tr>
-<tr>
-<td style="text-align: center"><code>port</code></td>
-<td style="text-align: center"><code>number</code></td>
-<td style="text-align: left">Device port</td>
-</tr>
-<tr>
-<td style="text-align: center"><code>timestamp</code></td>
-<td style="text-align: center"><code>Date</code></td>
-<td style="text-align: left">Time the device was (last) discovered</td>
-</tr>
-</tbody></table>
-<h3 id='enum-channeltypes'>enum:<code>CHANNELTYPES</code></h3>
-<ul>
-<li><code>LINE</code></li>
-<li><code>MAIN</code></li>
-<li><code>TALKBACK</code></li>
-<li><code>AUX</code></li>
-<li><code>SUB</code></li>
-<li><code>FX</code></li>
-<li><code>FXRETURN</code></li>
-</ul>
+
+<p>Used during connection to configure client identity</p>
 <h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+
+// ...
+
+client.on(MESSAGETYPES.JSON, (evt) =&gt; {
+    // ...
+})
+
+// or
+
+client.on("JM", (evt) =&gt; {
+    // ...
+})
 </span></code></pre></div>
 <table><thead>
 <tr>
@@ -508,8 +478,107 @@
 </tr>
 </tbody></table>
 
-<p>Payloads emitted from these events are of various data types</p>
+<p>Payloads emitted from these <a href="#events">events</a> are of various data types</p>
+<h3 id='type-discoverytype'>type:<code>DiscoveryType</code></h3>
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">StudioLive 16R</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">serial</span><span class="p">:</span> <span class="dl">"</span><span class="s2">RA1E21060260</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">ip</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10.0.0.18</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">port</span><span class="p">:</span> <span class="mi">53000</span><span class="p">,</span>
+    <span class="nx">timestamp</span><span class="p">:</span> <span class="p">[</span><span class="nb">Date</span> <span class="nx">object</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>name</code></td>
+<td style="text-align: center"><code>string</code></td>
+<td style="text-align: left">Device model</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>serial</code></td>
+<td style="text-align: center"><code>string</code></td>
+<td style="text-align: left">Device serial</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>ip</code></td>
+<td style="text-align: center"><code>string</code></td>
+<td style="text-align: left">Device IP</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>port</code></td>
+<td style="text-align: center"><code>number</code></td>
+<td style="text-align: left">Device port</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>timestamp</code></td>
+<td style="text-align: center"><code>Date</code></td>
+<td style="text-align: left">Time the device was (last) discovered</td>
+</tr>
+</tbody></table>
+<h3 id='enum-channeltypes'>enum:<code>CHANNELTYPES</code></h3>
+<ul>
+<li><code>LINE</code></li>
+<li><code>MAIN</code></li>
+<li><code>TALKBACK</code></li>
+<li><code>AUX</code></li>
+<li><code>SUB</code></li>
+<li><code>FX</code></li>
+<li><code>FXRETURN</code></li>
+</ul>
+<h3 id='type-channelselector'>type:<code>ChannelSelector</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="nx">someFunctionThatTakesInAChannelSelector</span><span class="p">({</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LINE</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">channel</span><span class="p">:</span> <span class="mi">13</span>
+<span class="p">})</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>type</code></td>
+<td style="text-align: center"><code>CHANNELTYPES</code></td>
+<td style="text-align: left">Channel type</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>channel</code></td>
+<td style="text-align: center"><code>number</code></td>
+<td style="text-align: left">Channel number</td>
+</tr>
+</tbody></table>
+
+<p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+
+someFunctionThatTakesInAChannelSelector({
+    type: </span><span class="dl">'</span><span class="nx">LINE</span><span class="dl">'</span><span class="s1">,
+    channel: CHANNELS.LINE.CHANNEL_13
+})
+</span></code></pre></div>
+<p><code>channel</code> values can also be sourced from the <code>CHANNELS</code> enum</p>
 <h3 id='type-meterdata'>type:<code>MeterData</code></h3>
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">meter</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">meterData</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">meterData</span><span class="p">.</span><span class="nx">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1">// Input signal meter for channel 1</span>
+    <span class="nx">meterData</span><span class="p">.</span><span class="nx">input</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="c1">// Input signal meter for channel 9</span>
+
+    <span class="nx">meterData</span><span class="p">.</span><span class="nx">main</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1">// Left channel signal meter for main output</span>
+    <span class="nx">meterData</span><span class="p">.</span><span class="nx">main</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1">// Right channel signal meter for main output</span>
+<span class="p">})</span>
+</code></pre></div>
 <ul>
 <li><code>input</code> - <code>number[]</code> - Input channel meters</li>
 <li><code>mainMixFaders</code> - <code>number[]</code> - Main mix channel meters</li>
@@ -557,35 +626,6 @@
 <li><code>stripC</code> - <code>number[]</code></li>
 </ul></li>
 </ul>
-<h3 id='type-channelselector'>type:<code>ChannelSelector</code></h3>
-<table><thead>
-<tr>
-<th style="text-align: center">Property</th>
-<th style="text-align: center">Type</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center"><code>type</code></td>
-<td style="text-align: center"><code>CHANNELTYPES</code></td>
-<td style="text-align: left">Channel type</td>
-</tr>
-<tr>
-<td style="text-align: center"><code>channel</code></td>
-<td style="text-align: center"><code>number</code></td>
-<td style="text-align: left">Channel number</td>
-</tr>
-</tbody></table>
-
-<p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
-
-someFunctionThatTakesInAChannelSelector({
-    type: </span><span class="dl">'</span><span class="nx">LINE</span><span class="dl">'</span><span class="s1">,
-    channel: CHANNELS.LINE.CHANNEL_13
-})
-</span></code></pre></div>
-<p><code>channel</code> values can also be sourced from the <code>CHANNELS</code> enum</p>
 
 <p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
