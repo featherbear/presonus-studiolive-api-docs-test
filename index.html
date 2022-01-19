@@ -447,7 +447,8 @@
 <li><code>FX</code></li>
 <li><code>FXRETURN</code></li>
 </ul>
-<h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3>
+<h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+</span></code></pre></div>
 <table><thead>
 <tr>
 <th style="text-align: center">Name</th>
@@ -577,6 +578,14 @@
 </tbody></table>
 
 <p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+
+someFunctionThatTakesInAChannelSelector({
+    type: </span><span class="dl">'</span><span class="nx">LINE</span><span class="dl">'</span><span class="s1">,
+    channel: CHANNELS.LINE.CHANNEL_13
+})
+</span></code></pre></div>
+<p><code>channel</code> values can also be sourced from the <code>CHANNELS</code> enum</p>
 
 <p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
@@ -622,23 +631,24 @@
 <div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
 
 // Also import some enums
-import { MESSAGETYPE, CHANNELS } from </span><span class="dl">'</span><span class="nx">presonus</span><span class="o">-</span><span class="nx">studiolive</span><span class="o">-</span><span class="nx">api</span><span class="s2">`
+import { MESSAGETYPES, CHANNELS } from </span><span class="dl">'</span><span class="nx">presonus</span><span class="o">-</span><span class="nx">studiolive</span><span class="o">-</span><span class="nx">api</span><span class="s2">`
 
 const client = new Client("10.0.0.18", 53000)
 client.connect({
     clientDescription: 'Console Remote'
 }).then(() =&gt; {
 
-    // Set channel 1 fader to -6 dB
+    // Set channel 1 fader to -6 dB over a duration of 3 seconds
     client.setChannelVolumeDb({
         type: 'LINE',
         channel: CHANNELS.LINE.CHANNEL_1
-    }, -6)
+    }, -6, 3000).then(() =&gt; {
 
-    // Mute channel 2
-    client.mute({
-        type: 'LINE',
-        channel: CHANNELS.LINE.CHANNEL_2
+        // Unmute channel 2
+        client.unmute({
+            type: 'LINE',
+            channel: CHANNELS.LINE.CHANNEL_2
+        })
     })
 
     console.log(`</span><span class="nx">Mixer</span> <span class="nx">version</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_version</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`)
@@ -729,24 +739,6 @@ Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blo
 <div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api
 </span></code></pre></div>
 <p>If you only want to search for devices on the network without the intention of connecting to them, you can run the discovery client independently.</p>
-
-<ul>
-<li>Instantiate the client
-
-<ul>
-<li><code>new Discovery()</code></li>
-</ul></li>
-<li>Attach <code>discover</code> event handler
-
-<ul>
-<li><code>&lt;Client&gt;.on(&#39;discover&#39;, Function&lt;DiscoveryType&gt;)</code></li>
-</ul></li>
-<li>Listen for discovery events (optional timeout)
-
-<ul>
-<li><code>&lt;Client&gt;.start(timeout?: ms)</code></li>
-</ul></li>
-</ul>
 <div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="nx">discoveryClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Discovery</span><span class="p">()</span>
 
 <span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">discover</span><span class="dl">'</span><span class="p">,</span>
@@ -765,6 +757,15 @@ Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blo
  <span class="c1">// Discover for 10 seconds</span>
 <span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
+<p><code>new Discovery()</code><br>
+Instantiate the client</p>
+
+<p><code>&lt;Client&gt;.on(&#39;discover&#39;, Function&lt;DiscoveryType&gt;)</code><br>
+Attach <code>discover</code> event handler</p>
+
+<p><code>&lt;Client&gt;.start(timeout?: ms)</code><br>
+Listen for discovery events (optional <code>timeout</code>)</p>
+
 <p><a name="26-internalmd"></a></p>
 
 <ul>
