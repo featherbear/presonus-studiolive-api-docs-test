@@ -299,13 +299,27 @@
       <img src="images/logo-1e815a84.png" class="logo" alt="" />
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+            <a href="#presonus-studiolive-api" class="toc-h1 toc-link" data-title="PreSonus StudioLive API">PreSonus StudioLive API</a>
           </li>
           <li>
             <a href="#installation" class="toc-h1 toc-link" data-title="Installation">Installation</a>
           </li>
           <li>
             <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
+          </li>
+          <li>
+            <a href="#documentation" class="toc-h1 toc-link" data-title="Documentation">Documentation</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#events" class="toc-h2 toc-link" data-title="Events">Events</a>
+                  </li>
+                  <li>
+                    <a href="#low-er-level-access" class="toc-h2 toc-link" data-title="Low(er) level access">Low(er) level access</a>
+                  </li>
+                  <li>
+                    <a href="#metering" class="toc-h2 toc-link" data-title="Metering">Metering</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#research" class="toc-h1 toc-link" data-title="Research">Research</a>
@@ -333,82 +347,79 @@
       <div class="dark-box"></div>
       <div class="content">
         <p><a name="00-introductionmd"></a></p>
-<h1 id='introduction'>Introduction</h1>
-<blockquote>
-<p>A Node.js API to interface with PreSonus&#39; StudioLive III consoles over the network. Read more <a href="https://featherbear.cc/presonus-studiolive-api/">here</a></p>
-</blockquote>
+<h1 id='presonus-studiolive-api'>PreSonus StudioLive API</h1>
+<p>An unofficial Node.js API for the PreSonus StudioLive III consoles.</p>
+
+<p>Tested against the following models</p>
+
+<ul>
+<li>StudioLive 16 Mixer</li>
+<li>StudioLive 16R Rack Mixer</li>
+<li>StudioLive 24R Rack Mixer</li>
+</ul>
+
+<p>Read more <a href="https://featherbear.cc/presonus-studiolive-api/">here</a></p>
 
 <p><a name="10-installationmd"></a></p>
 <h1 id='installation'>Installation</h1>
+<p>This node package is only hosted on GitHub, however you can install packages from <code>npm</code> and <code>yarn</code> in the same fashion as any other package.</p>
+
+<ul>
+<li><code>npm install featherbear/presonus-studiolive#v1.0.5</code></li>
+<li><code>yarn add featherbear/presonus-studiolive#v1.0.5</code></li>
+</ul>
+
 <p><a name="20-apimd"></a></p>
 <h1 id='api'>API</h1>
-<hr>
-
-<p>Page currently under construction</p>
-
-<!-- ...
-
-`const { Client, MessageTypes } = require('presonus-studiolive-api')`
-
-# Documentation
-
-* `new Client(host: int, port: int)`  
-Creates a Client object that will later connect to the console at `host`:`port`
-
-* `client.connect()`  
-Connect to the console
-
-* `client.listen()`  
-Start the metering server
-
-* `client.stop()`  
-Stop the metering server
-
-* `client.setUDPServerPort(port: int)`  
-Set the listen port of the metering server.  
-Can only be run while the metering server is not running
-
-* `client.on(evtName: str, fn: function)`  
-Listen for `evtName` events that will call `fn`
-
-* `client.sendList(path: str)`  
-Request `path` from the console
-
-## Events
-
-Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  
-
-### Protocol Events
-
-* `Hello`
-* `JSON`
-* `Setting`
-* `Settings2`
-* `FileResource`
-* `FileResource2`
-* `CompressedUnknown`
-
-### Custom Events
-
-* `connected` - Emitted when the client has successfully connected to the console
-* `listening` - Emitted when the client has successfully started the meter server
-* `meter` | `meterData` - Emitted when metering data is received
-
-## Low(er) level access
-
-* `client.emit(evtName: str, ...data)`  
-Emits an event for `evtName` with `data`
-
-* `client._sendPacket(messageCode: bytes[2], data, <customA>, <customB>)`  
-Sends a packet to the server, messageCode is a two byte long string.  
-`customA` is an optional single byte character  
-`customB` is an optional single byte character  
-
-* `client.conn` => TCP socket connection
-
-## Metering
-
-Metering is currently unavailable in the Node.js version -->
+<p><code>const { Client, MessageTypes } = require(&#39;presonus-studiolive-api&#39;)</code></p>
+<h1 id='documentation'>Documentation</h1>
+<ul>
+<li><p><code>new Client(host: int, port: int)</code><br>
+Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p></li>
+<li><p><code>client.connect()</code><br>
+Connect to the console</p></li>
+<li><p><code>client.listen()</code><br>
+Start the metering server</p></li>
+<li><p><code>client.stop()</code><br>
+Stop the metering server</p></li>
+<li><p><code>client.setUDPServerPort(port: int)</code><br>
+Set the listen port of the metering server.<br>
+Can only be run while the metering server is not running</p></li>
+<li><p><code>client.on(evtName: str, fn: function)</code><br>
+Listen for <code>evtName</code> events that will call <code>fn</code></p></li>
+<li><p><code>client.sendList(path: str)</code><br>
+Request <code>path</code> from the console</p></li>
+</ul>
+<h2 id='events'>Events</h2>
+<p>Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  </p>
+<h3 id='protocol-events'>Protocol Events</h3>
+<ul>
+<li><code>Hello</code></li>
+<li><code>JSON</code></li>
+<li><code>Setting</code></li>
+<li><code>Settings2</code></li>
+<li><code>FileResource</code></li>
+<li><code>FileResource2</code></li>
+<li><code>CompressedUnknown</code></li>
+</ul>
+<h3 id='custom-events'>Custom Events</h3>
+<ul>
+<li><code>connected</code> - Emitted when the client has successfully connected to the console</li>
+<li><code>listening</code> - Emitted when the client has successfully started the meter server</li>
+<li><code>meter</code> | <code>meterData</code> - Emitted when metering data is received</li>
+</ul>
+<h2 id='low-er-level-access'>Low(er) level access</h2>
+<ul>
+<li><p><code>client.emit(evtName: str, ...data)</code><br>
+Emits an event for <code>evtName</code> with <code>data</code></p></li>
+<li><p><code>client._sendPacket(messageCode: bytes[2], data, &lt;customA&gt;, &lt;customB&gt;)</code><br>
+Sends a packet to the server, messageCode is a two byte long string.<br>
+<code>customA</code> is an optional single byte character<br>
+<code>customB</code> is an optional single byte character  </p></li>
+<li><p><code>client.conn</code> =&gt; TCP socket connection</p></li>
+</ul>
+<h2 id='metering'>Metering</h2>
+<p>Metering is currently unavailable in the Node.js version --&gt;</p>
 
 <!-- Metering data is stored as a dictionary -->
 
