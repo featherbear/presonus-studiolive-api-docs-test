@@ -378,7 +378,7 @@
 <p><a name="20-documentationmd"></a></p>
 <h1 id='documentation'>Documentation</h1>
 <p><a name="21-data-typesmd"></a></p>
-<h2 id='data-types'>Data Types</h2><h3 id='subscriptionoptions-payload'><code>SubscriptionOptions</code> Payload</h3>
+<h2 id='data-types'>Data Types</h2><h3 id='payload-subscriptionoptions'>payload:<code>SubscriptionOptions</code></h3>
 <table><thead>
 <tr>
 <th style="text-align: center">Property</th>
@@ -400,7 +400,7 @@
 <td style="text-align: left">Identifier</td>
 </tr>
 </tbody></table>
-<h3 id='discoverytype'><code>DiscoveryType</code></h3>
+<h3 id='type-discoverytype'>type:<code>DiscoveryType</code></h3>
 <table><thead>
 <tr>
 <th style="text-align: center">Property</th>
@@ -434,6 +434,37 @@
 <td style="text-align: left">Time the device was (last) discovered</td>
 </tr>
 </tbody></table>
+<h3 id='enum-channeltypes'>enum:<code>CHANNELTYPES</code></h3>
+<ul>
+<li><code>LINE</code></li>
+<li><code>MAIN</code></li>
+<li><code>TALKBACK</code></li>
+<li><code>AUX</code></li>
+<li><code>SUB</code></li>
+<li><code>FX</code></li>
+<li><code>FXRETURN</code></li>
+</ul>
+<h3 id='channelselector'><code>ChannelSelector</code></h3>
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>type</code></td>
+<td style="text-align: center"><code>CHANNELTYPES</code></td>
+<td style="text-align: left">Channel type</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>channel</code></td>
+<td style="text-align: center"><code>number</code></td>
+<td style="text-align: left">Channel number</td>
+</tr>
+</tbody></table>
+
+<p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
 
 <p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2>
