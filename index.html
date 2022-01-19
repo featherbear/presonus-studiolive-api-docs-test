@@ -328,6 +328,9 @@
                   <li>
                     <a href="#standalone-discovery" class="toc-h2 toc-link" data-title="Standalone Discovery">Standalone Discovery</a>
                   </li>
+                  <li>
+                    <a href="#internal-functions" class="toc-h2 toc-link" data-title="Internal Functions">Internal Functions</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -677,7 +680,7 @@ A list of possible event types are given in <a href="#enum-messagetypes">enum:<c
 This event will be emitted after the specific event is emitted.</p>
 
 <p>To listen to <strong>meter events</strong>, attach an event handler to the <code>meter</code> event.<br>
-See <a href="#metering">Metering</a></p>
+<strong>See <a href="#metering">Metering</a></strong></p>
 <h3 id='lifecycle-events'>Lifecycle Events</h3>
 <blockquote>
 <p>Lifecycle Events</p>
@@ -703,37 +706,37 @@ See <a href="#metering">Metering</a></p>
 <blockquote>
 <p>ES6</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span><span class="p">,</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
-</span></code></pre></div>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span><span class="p">,</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
+</code></pre></div>
 <blockquote>
 <p>Example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
 
-// Also import some enums
-import { MESSAGETYPES, CHANNELS } from </span><span class="dl">'</span><span class="nx">presonus</span><span class="o">-</span><span class="nx">studiolive</span><span class="o">-</span><span class="nx">api</span><span class="s2">`
+<span class="c1">// Also import some enums</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span><span class="p">,</span> <span class="nx">CHANNELS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
 
-const client = new Client("10.0.0.18", 53000)
-client.connect({
-    clientDescription: 'Console Remote'
-}).then(() =&gt; {
+<span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Client</span><span class="p">(</span><span class="dl">"</span><span class="s2">10.0.0.18</span><span class="dl">"</span><span class="p">,</span> <span class="mi">53000</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">({</span>
+    <span class="na">clientDescription</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Console Remote</span><span class="dl">'</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
 
-    // Set channel 1 fader to -6 dB over a duration of 3 seconds
-    client.setChannelVolumeDb({
-        type: 'LINE',
-        channel: CHANNELS.LINE.CHANNEL_1
-    }, -6, 3000).then(() =&gt; {
+    <span class="c1">// Set channel 1 fader to -6 dB over a duration of 3 seconds</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">setChannelVolumeDb</span><span class="p">({</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LINE</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">channel</span><span class="p">:</span> <span class="nx">CHANNELS</span><span class="p">.</span><span class="nx">LINE</span><span class="p">.</span><span class="nx">CHANNEL_1</span>
+    <span class="p">},</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3000</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
 
-        // Unmute channel 2
-        client.unmute({
-            type: 'LINE',
-            channel: CHANNELS.LINE.CHANNEL_2
-        })
-    })
+        <span class="c1">// Unmute channel 2</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">unmute</span><span class="p">({</span>
+            <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LINE</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">channel</span><span class="p">:</span> <span class="nx">CHANNELS</span><span class="p">.</span><span class="nx">LINE</span><span class="p">.</span><span class="nx">CHANNEL_2</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
 
-    console.log(`</span><span class="nx">Mixer</span> <span class="nx">version</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_version</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`)
-})
-</span></code></pre></div>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Ver </span><span class="p">${</span><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_version</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>
 <p><code>new Client(host: string, port: number = 53000)</code><br>
 Creates a Client object that will later connect to the console</p>
 
@@ -789,14 +792,11 @@ Stop the metering server</p>
 Get a device state given by its <code>key</code>.  </p>
 
 <p>This function is used internally by other methods, but can be accessed by the user to extract other data that might not yet be used.<br>
-Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed"><code>zlib.parsed</code></a> file, or the IntelliSense information at <code>&lt;Client&gt;.state._data</code> for known keys .</p>
+Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed"><code>zlib.parsed</code></a> file for known keys.<br>
+Alternatively, refer to the IntelliSense information at <code>&lt;Client&gt;.state._data</code></p>
 
 <p><a name="25-discoverymd"></a></p>
-<h2 id='discovery'>Discovery</h2>
-<p><code>&lt;Client&gt;.discover(timeout: number = 10 * 1000)</code></p>
-
-<p>Perform a console discovery for <code>timeout</code> milliseconds, returns an array containing the devices found within the discovery period</p>
-<div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Discover for 30 seconds</span>
+<h2 id='discovery'>Discovery</h2><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Discover for 30 seconds</span>
 <span class="nx">client</span><span class="p">.</span><span class="nx">discover</span><span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">devices</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">device</span> <span class="k">of</span> <span class="nx">devices</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// device.name</span>
@@ -808,17 +808,11 @@ Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blo
     <span class="p">}</span>
 <span class="p">})</span>
 </code></pre></div>
-<hr>
-<h2 id='standalone-discovery'>Standalone Discovery</h2>
-<blockquote>
-<p>ES5</p>
-</blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
-</code></pre></div>
-<blockquote>
-<p>ES6</p>
-</blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api
+<p><code>&lt;Client&gt;.discover(timeout: number = 10 * 1000)</code></p>
+
+<p>Perform a console discovery for <code>timeout</code> milliseconds.<br>
+Returns an array containing the devices found within the discovery period</p>
+<h2 id='standalone-discovery'>Standalone Discovery</h2><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api
 </span></code></pre></div>
 <p>If you only want to search for devices on the network without the intention of connecting to them, you can run the discovery client independently.</p>
 <div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="nx">discoveryClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Discovery</span><span class="p">()</span>
@@ -849,11 +843,9 @@ Attach <code>discover</code> event handler</p>
 Listen for discovery events (optional <code>timeout</code>)</p>
 
 <p><a name="26-internalmd"></a></p>
-
-<ul>
-<li><code>&lt;Client&gt;.sendList(key)</code>
-Request list resource</li>
-</ul>
+<h2 id='internal-functions'>Internal Functions</h2>
+<p><code>&lt;Client&gt;.sendList(key)</code><br>
+Request list resource</p>
 
 <p><a name="30-researchmd"></a></p>
 <h1 id='research'>Research</h1>
