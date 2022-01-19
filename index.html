@@ -869,22 +869,12 @@ Request list resource</p>
 </ul></li>
 <li><p>Every 3 seconds, the console emits a Discovery packet</p></li>
 <li><p>The client sends a KeepAlive packet every few seconds </p></li>
-<li><p>When the client connects it sends a Hello and Subscribe message to the console</p></li>
+<li><p>When the client connects it sends a Hello and Subscribe message to the console</p>
+
+<ul>
+<li>The console replies with a SubscriptionReply and Zlib data containing the console state</li>
+</ul></li>
 </ul>
-
-<!-- 
-
-## Overview
-
-Discovery Broadcast - every 3 seconds
-KeepAlive - every n second ???
-
-Connection Order -> Hello, Subscribe, Request File
-
-UDP packets metering, discovery
-TCP for control
-
--->
 
 <p><a name="32-packetmd"></a></p>
 <h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
