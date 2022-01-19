@@ -337,6 +337,9 @@
             <a href="#research" class="toc-h1 toc-link" data-title="Research">Research</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#high-level-overview" class="toc-h2 toc-link" data-title="High-Level Overview">High-Level Overview</a>
+                  </li>
+                  <li>
                     <a href="#general" class="toc-h2 toc-link" data-title="General">General</a>
                   </li>
                   <li>
@@ -344,12 +347,6 @@
                   </li>
                   <li>
                     <a href="#received-packets" class="toc-h2 toc-link" data-title="Received Packets">Received Packets</a>
-                  </li>
-                  <li>
-                    <a href="#protocol-research" class="toc-h2 toc-link" data-title="Protocol Research">Protocol Research</a>
-                  </li>
-                  <li>
-                    <a href="#values-2" class="toc-h2 toc-link" data-title="Values">Values</a>
                   </li>
               </ul>
           </li>
@@ -856,7 +853,40 @@ Request list resource</p>
 
 <p>Old Python code: <a href="https://github.com/featherbear/presonus-studiolive-api/tree/research_python">github.com/featherbear/presonus-studiolive-api/tree/research_python</a></p>
 
-<p><a name="31-packetmd"></a></p>
+<p><a name="31-overviewmd"></a></p>
+<h2 id='high-level-overview'>High-Level Overview</h2>
+<ul>
+<li>TCP connections are used for control
+
+<ul>
+<li>The console listens on TCP port <code>53000</code></li>
+</ul></li>
+<li><p>UDP connections are used for metering data</p>
+
+<ul>
+<li>The client opens up a UDP server on a random port</li>
+<li>The client notifies the console of the port</li>
+</ul></li>
+<li><p>Every 3 seconds, the console emits a Discovery packet</p></li>
+<li><p>The client sends a KeepAlive packet every few seconds </p></li>
+<li><p>When the client connects it sends a Hello and Subscribe message to the console</p></li>
+</ul>
+
+<!-- 
+
+## Overview
+
+Discovery Broadcast - every 3 seconds
+KeepAlive - every n second ???
+
+Connection Order -> Hello, Subscribe, Request File
+
+UDP packets metering, discovery
+TCP for control
+
+-->
+
+<p><a name="32-packetmd"></a></p>
 <h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
 <p>All packets start with the four bytes <code>\x55\x43\x00\x01</code> (UC..)</p>
 <h3 id='payload-types'>Payload Types</h3>
@@ -1284,42 +1314,6 @@ These payloads have their own 4-byte little-endian size header.</p>
 <li><code>{...}</code> - Dictionary</li>
 <li><code>[...]</code> - Array (TBC: only of strings???)</li>
 </ul>
-
-<p><a name="32-protocolmd"></a></p>
-<h2 id='protocol-research'>Protocol Research</h2>
-<!-- 
-
-## Overview
-
-Discovery Broadcast - every 3 seconds
-KeepAlive - every n second ???
-
-Connection Order -> Hello, Subscribe, Request File
-
-UDP packets metering, discovery
-TCP for control
-
--->
-
-<p><a name="33-valuesmd"></a></p>
-<h2 id='values-2'>Values</h2>
-<p>Listpresets/channel</p>
-
-<p>/// 
-Resp as PV</p>
-
-<p>permissions/mix_permissions
-permissions/rename
-permissions/channel_source
-permissions/preamps
-permissions/assigns
-permissions/scenes
-permissions/mute_groups
-permissions/channel_type
-permissions/eq_dyn
-permissions/geq
-permissions/fx
-permissions/groups</p>
 
 <p><a name="40-demomd"></a></p>
 <h1 id='demo-code'>Demo Code</h1>
