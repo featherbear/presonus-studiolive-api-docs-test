@@ -308,13 +308,13 @@
             <a href="#documentation" class="toc-h1 toc-link" data-title="Documentation">Documentation</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#client-api" class="toc-h2 toc-link" data-title="Client API">Client API</a>
+                    <a href="#data-types" class="toc-h2 toc-link" data-title="Data Types">Data Types</a>
                   </li>
                   <li>
                     <a href="#events" class="toc-h2 toc-link" data-title="Events">Events</a>
                   </li>
                   <li>
-                    <a href="#low-er-level-access" class="toc-h2 toc-link" data-title="Low(er) level access">Low(er) level access</a>
+                    <a href="#client-api" class="toc-h2 toc-link" data-title="Client API">Client API</a>
                   </li>
                   <li>
                     <a href="#metering" class="toc-h2 toc-link" data-title="Metering">Metering</a>
@@ -377,7 +377,52 @@
 
 <p><a name="20-documentationmd"></a></p>
 <h1 id='documentation'>Documentation</h1>
-<p><a name="21-client-apimd"></a></p>
+<p><a name="21-data-typesmd"></a></p>
+<h2 id='data-types'>Data Types</h2><h3 id='subscriptionoptions'><code>SubscriptionOptions</code></h3>
+<table><thead>
+<tr>
+<th style="text-align: center">Property</th>
+<th style="text-align: center">Type</th>
+<th style="text-align: center">Default</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>clientDescription</code></td>
+<td style="text-align: center"><code>string</code></td>
+<td style="text-align: center"><code>&quot;User&quot;</code></td>
+<td style="text-align: left">Display name of the client</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>clientIdentifier</code></td>
+<td style="text-align: center"><code>string</code></td>
+<td style="text-align: center"><code>&quot;133d066a919ea0ea&quot;</code></td>
+<td style="text-align: left">Identifier</td>
+</tr>
+</tbody></table>
+
+<p><a name="22-eventsmd"></a></p>
+<h2 id='events'>Events</h2>
+<p>Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  </p>
+<h3 id='protocol-events'>Protocol Events</h3>
+<ul>
+<li><code>Hello</code></li>
+<li><code>JSON</code></li>
+<li><code>Setting</code></li>
+<li><code>Settings2</code></li>
+<li><code>FileResource</code></li>
+<li><code>FileResource2</code></li>
+<li><code>CompressedUnknown</code></li>
+</ul>
+<h3 id='custom-events'>Custom Events</h3>
+<ul>
+<li><code>connected</code> - Emitted when the client has successfully connected to the console</li>
+</ul>
+
+<!-- * `listening` - Emitted when the client has successfully started the meter server
+* `meter` | `meterData` - Emitted when metering data is received -->
+
+<p><a name="23-client-apimd"></a></p>
 <h2 id='client-api'>Client API</h2>
 <blockquote>
 <p>ES5</p>
@@ -407,36 +452,6 @@ Disconnect from the console</p>
 
 <p><code>&lt;Client&gt;.on(evtName: str, fn: function)</code><br>
 Listen for <code>evtName</code> events that will call <code>fn</code></p>
-
-<p><a name="22-eventsmd"></a></p>
-<h2 id='events'>Events</h2>
-<p>Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  </p>
-<h3 id='protocol-events'>Protocol Events</h3>
-<ul>
-<li><code>Hello</code></li>
-<li><code>JSON</code></li>
-<li><code>Setting</code></li>
-<li><code>Settings2</code></li>
-<li><code>FileResource</code></li>
-<li><code>FileResource2</code></li>
-<li><code>CompressedUnknown</code></li>
-</ul>
-<h3 id='custom-events'>Custom Events</h3>
-<ul>
-<li><code>connected</code> - Emitted when the client has successfully connected to the console</li>
-<li><code>listening</code> - Emitted when the client has successfully started the meter server</li>
-<li><code>meter</code> | <code>meterData</code> - Emitted when metering data is received</li>
-</ul>
-<h2 id='low-er-level-access'>Low(er) level access</h2>
-<ul>
-<li><p><code>client.emit(evtName: str, ...data)</code><br>
-Emits an event for <code>evtName</code> with <code>data</code></p></li>
-<li><p><code>client._sendPacket(messageCode: bytes[2], data, &lt;customA&gt;, &lt;customB&gt;)</code><br>
-Sends a packet to the server, messageCode is a two byte long string.<br>
-<code>customA</code> is an optional single byte character<br>
-<code>customB</code> is an optional single byte character  </p></li>
-<li><p><code>client.conn</code> =&gt; TCP socket connection</p></li>
-</ul>
 
 <p><a name="23-meteringmd"></a></p>
 <h2 id='metering'>Metering</h2>
