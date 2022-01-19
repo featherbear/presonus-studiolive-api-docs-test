@@ -340,7 +340,10 @@
                     <a href="#general" class="toc-h2 toc-link" data-title="General">General</a>
                   </li>
                   <li>
-                    <a href="#response-packets" class="toc-h2 toc-link" data-title="Response Packets">Response Packets</a>
+                    <a href="#sent-payloads" class="toc-h2 toc-link" data-title="Sent Payloads">Sent Payloads</a>
+                  </li>
+                  <li>
+                    <a href="#received-packets" class="toc-h2 toc-link" data-title="Received Packets">Received Packets</a>
                   </li>
                   <li>
                     <a href="#protocol-research" class="toc-h2 toc-link" data-title="Protocol Research">Protocol Research</a>
@@ -792,7 +795,7 @@ Stop the metering server</p>
 Get a device state given by its <code>key</code>.  </p>
 
 <p>This function is used internally by other methods, but can be accessed by the user to extract other data that might not yet be used.<br>
-Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed"><code>zlib.parsed</code></a> file for known keys.<br>
+Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blob/2dedb706fa0cddeaf064422b1f79f4cdb00be1d8/zlib.parsed"><code>zlib.parsed</code></a> file for known keys.<br>
 Alternatively, refer to the IntelliSense information at <code>&lt;Client&gt;.state._data</code></p>
 
 <p><a name="25-discoverymd"></a></p>
@@ -925,21 +928,27 @@ Request list resource</p>
 </tr>
 </tbody></table>
 
-<p>Note: <code>Payload Size = length(Payload Type) + length(Payload Data)</code></p>
+<blockquote>
+<p><strong>Note</strong><br>
+<code>Payload Size = length(Payload Type) + length(Payload Data)</code></p>
+</blockquote>
 <h3 id='c-bytes'>C-Bytes</h3>
 <p>There are four bytes that appear after the payload type in the payload data.
-The first and third positions have some byte value [<code>0x6a</code>, <code>0x68</code>, <code>0x65</code>], with the other positions being NULL.</p>
+The first and third positions have some byte value (either <code>0x6a</code>, <code>0x68</code>, or <code>0x65</code>), with the other positions being NULL.</p>
 
 <p>i.e. <code>68 00 65 00</code>, or <code>6a 00 65 00</code></p>
 
 <p>I will refer to this group of four bytes as <strong>C-Bytes</strong> (custom bytes).<br>
-The first byte will be known as <strong>C-Byte A</strong> and the third as <strong>C-Byte B</strong></p>
+The first byte will be <strong>C-Byte A</strong>, and the third as <strong>C-Byte B</strong></p>
 
-<p>They seem to be used for signalling and matching responses to requests.<br>
-<em>i.e (hypothetically) If a message is sent with <code>C-Byte A = j</code>, <code>C-Byte B = e</code> a response will be sent containing <code>C-Byte A = e</code>, <code>C-Byte B = j</code> so that the response can be matched with the request.</em></p>
+<blockquote>
+<p>i.e If a message is sent with <code>C-Byte A = j</code>, <code>C-Byte B = e</code> a response will be sent containing <code>C-Byte A = e</code>, <code>C-Byte B = j</code> so that the response can be matched with the request.</p>
+</blockquote>
+
+<p>They seem to be used for matching responses to requests.  </p>
 
 <p>For most cases it looks like they&#39;re not too important to keep synchronised - But as I keep researching and developing this API, I might find the need to actually implement proper request matching</p>
-<h3 id='hello'>Hello</h3>
+<h2 id='sent-payloads'>Sent Payloads</h2><h3 id='hello'>Hello</h3>
 <blockquote>
 <p>The first packet that gets sent to the console</p>
 </blockquote>
@@ -1039,7 +1048,9 @@ The first byte will be known as <strong>C-Byte A</strong> and the third as <stro
 </tr>
 </tbody></table>
 
-<p>The console will reply with a response JSON payload (<code>{&quot;id&quot;: &quot;SubscriptionReply&quot;}</code>), and additionally a ZLIB payload</p>
+<p>The console will then reply with a response JSON payload<br>
+<code>{&quot;id&quot;: &quot;SubscriptionReply&quot;}</code><br>
+and additionally a ZLIB payload</p>
 <h4 id='json-fields'>JSON Fields</h4>
 <table><thead>
 <tr>
@@ -1102,7 +1113,8 @@ The first byte will be known as <strong>C-Byte A</strong> and the third as <stro
 <!-- TODO: What is a file? -->
 
 <blockquote>
-<p>Request a file from the console. File path is terminated with a NULL character.</p>
+<p>Request a file from the console.<br>
+File path is terminated with a NULL character.</p>
 </blockquote>
 <div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 1d 00 46 52 6a 00 65 00 01 00 4c 69   UC....FRj.e...Li
 73 74 70 72 65 73 65 74 73 2f 63 68 61 6e 6e 65   stpresets/channe
@@ -1151,7 +1163,75 @@ The first byte will be known as <strong>C-Byte A</strong> and the third as <stro
 <td style="text-align: left"></td>
 </tr>
 </tbody></table>
-<h3 id='zlib-compressed-data'>ZLIB Compressed Data</h3>
+<h2 id='received-packets'>Received Packets</h2>
+<p>(Maybe they&#39;re the same?)</p>
+<h3 id='settings'>Settings</h3>
+<p>Setting packets have a payload type code of <code>0x50 0x56</code> (<code>PV</code>).</p>
+<h4 id='format'>Format</h4>
+<blockquote>
+<p><strong>key</strong> + <code>\x00</code> + <code>partA</code> (+ <code>partB</code>)</p>
+</blockquote>
+
+<ul>
+<li><code>key</code> - The name of the setting value</li>
+<li><code>partA</code> - <code>0x00 0x00</code> or <code>0x00 0x01</code></li>
+<li><code>partB</code> -  Optional 4-byte value</li>
+</ul>
+
+<p>For most responses, <code>partA</code> is <code>0x00 0x00</code>, and <code>partB</code> is appended.<br>
+However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x01</code> and <code>partB</code> is omitted.</p>
+<h3 id='discovery-2'>Discovery</h3>
+<p><strong>Note</strong><br>
+<strong><em>Discovery packets do not follow the standard format</em></strong></p>
+
+<blockquote>
+<p>Every <strong>3 seconds</strong>, the console will broadcast a UDP packet (from port <code>53000</code>) to <code>255.255.255.255:47809</code>.</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 08 cf 44 41 65 00 00 00 00 04 00 80   UC....DAe.......
+48 1c 48 67 23 60 51 4f 92 4e 1e 46 91 50 51 d1   H.Hg#`QO.N.F.PQ.
+53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00 41   StudioLive 24R.A
+55 44 00 52 41 32 45 31 38 30 33 30 32 32 36 00   UD.RA2E18030226.
+53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00      StudioLive 24R.
+</code></pre></div>
+<table><thead>
+<tr>
+<th style="text-align: left">Bytes</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0-3</td>
+<td style="text-align: left">Header</td>
+</tr>
+<tr>
+<td style="text-align: left">4-5</td>
+<td style="text-align: left">Source Port (2 byte little endian)</td>
+</tr>
+<tr>
+<td style="text-align: left">6-23</td>
+<td style="text-align: left">???</td>
+</tr>
+<tr>
+<td style="text-align: left">24-&gt;?</td>
+<td style="text-align: left">Console Model*</td>
+</tr>
+</tbody></table>
+
+<p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in <a href="https://www.presonus.com/products/UC-Surface">UC Surface</a>. The second instance appears to be some sort of friendly name</p>
+
+<p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 07 c2 44 51 00 00 65 00  UC....DQ..e.
+</code></pre></div>
+<blockquote>
+<p>or</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 00 00 44 51 00 00 65 00  UC....DQ..e.
+</code></pre></div><h3 id='zlib-compressed-data'>ZLIB Compressed Data</h3>
+<blockquote>
+<p>Example decompressed payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/2dedb706fa0cddeaf064422b1f79f4cdb00be1d8/zlib.dump">zlib.dump</a><br>
+Example decoded payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/2dedb706fa0cddeaf064422b1f79f4cdb00be1d8/zlib.parsed">zlib.parsed</a></p>
+</blockquote>
+
 <p><code>ZB</code> payloads contain a zlib-compressed copy of the mixer state.<br>
 These payloads have their own 4-byte little-endian size header.</p>
 
@@ -1191,11 +1271,11 @@ These payloads have their own 4-byte little-endian size header.</p>
 
 <p>The decompressed payload is stored in a type-prefixed and length-prefixed dictionary, delimited by an <code>i</code> (<code>0x69</code>) character.  </p>
 <h4 id='keys'>Keys</h4>
-<p>Keys are prefixed with <code>i_</code> where <code>_</code> is the key string length.</p>
-
 <blockquote>
-<p>e.g. <code>i(0x05)ABCDE</code> is the key <code>ABCDE</code> (length 5)</p>
+<p>e.g. <code>i\x05ABCDE</code> is the key <code>ABCDE</code> (length 5)</p>
 </blockquote>
+
+<p>Keys are prefixed with <code>i_</code> where <code>_</code> is the key string length.</p>
 <h4 id='values'>Values</h4>
 <ul>
 <li><code>Si_XXXXX</code> - String of length <code>_</code> (0-255), values contained in <code>XXXXX</code></li>
@@ -1205,73 +1285,6 @@ These payloads have their own 4-byte little-endian size header.</p>
 <li><code>[...]</code> - Array (TBC: only of strings???)</li>
 </ul>
 
-<p>Example decompressed payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.dump">zlib.dump</a><br>
-Example decoded payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed">zlib.parsed</a></p>
-
-<hr>
-<h2 id='response-packets'>Response Packets</h2>
-<p>(Maybe they&#39;re the same?)</p>
-<h3 id='settings'>Settings</h3>
-<p>Setting packets have a payload type code of <code>0x50 0x56</code> (<code>PV</code>).</p>
-<h4 id='format'>Format</h4>
-<blockquote>
-<p><strong>key</strong> + <code>\x00</code> + <code>partA</code> (+ <code>partB</code>)</p>
-</blockquote>
-
-<ul>
-<li><code>key</code> - The name of the setting value</li>
-<li><code>partA</code> - <code>0x00 0x00</code> or <code>0x00 0x01</code></li>
-<li><code>partB</code> -  Optional 4-byte value</li>
-</ul>
-
-<p>For most responses, <code>partA</code> is <code>0x00 0x00</code>, and <code>partB</code> is appended.<br>
-However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x01</code> and <code>partB</code> is omitted.</p>
-<h3 id='discovery-2'>Discovery</h3>
-<p><strong>Note: Discovery packets do not follow the standard packet packing format</strong></p>
-
-<blockquote>
-<p>Every <strong>3 seconds</strong>, the console will broadcast a UDP packet (from port <code>53000</code>) to <code>255.255.255.255:47809</code>.</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 08 cf 44 41 65 00 00 00 00 04 00 80   UC....DAe.......
-48 1c 48 67 23 60 51 4f 92 4e 1e 46 91 50 51 d1   H.Hg#`QO.N.F.PQ.
-53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00 41   StudioLive 24R.A
-55 44 00 52 41 32 45 31 38 30 33 30 32 32 36 00   UD.RA2E18030226.
-53 74 75 64 69 6f 4c 69 76 65 20 32 34 52 00      StudioLive 24R.
-</code></pre></div>
-<table><thead>
-<tr>
-<th style="text-align: left">Bytes</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">0-3</td>
-<td style="text-align: left">Header</td>
-</tr>
-<tr>
-<td style="text-align: left">4-5</td>
-<td style="text-align: left">Source Port (2 byte little endian)</td>
-</tr>
-<tr>
-<td style="text-align: left">6-23</td>
-<td style="text-align: left">???</td>
-</tr>
-<tr>
-<td style="text-align: left">24-&gt;?</td>
-<td style="text-align: left">Console Model*</td>
-</tr>
-</tbody></table>
-
-<p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in <a href="https://www.presonus.com/products/UC-Surface">UC Surface</a>. The second instance appears to be some sort of friendly name</p>
-
-<blockquote>
-<p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
-</blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 07 c2 44 51 00 00 65 00  UC....DQ..e.
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 00 00 44 51 00 00 65 00  UC....DQ..e.
-</code></pre></div>
 <p><a name="32-protocolmd"></a></p>
 <h2 id='protocol-research'>Protocol Research</h2>
 <!-- 
