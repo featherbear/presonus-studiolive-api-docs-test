@@ -1238,15 +1238,15 @@ However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x0
 </tbody></table>
 
 <p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in <a href="https://www.presonus.com/products/UC-Surface">UC Surface</a>. The second instance appears to be some sort of friendly name</p>
-
-<p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
 <div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 07 c2 44 51 00 00 65 00  UC....DQ..e.
 </code></pre></div>
 <blockquote>
 <p>or</p>
 </blockquote>
 <div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 00 00 44 51 00 00 65 00  UC....DQ..e.
-</code></pre></div><h3 id='zlib-compressed-data'>ZLIB Compressed Data</h3>
+</code></pre></div>
+<p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
+<h3 id='zlib-compressed-data'>ZLIB Compressed Data</h3>
 <blockquote>
 <p>Example decompressed payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/2dedb706fa0cddeaf064422b1f79f4cdb00be1d8/zlib.dump">zlib.dump</a><br>
 Example decoded payload: <a href="https://github.com/featherbear/presonus-studiolive-api/blob/2dedb706fa0cddeaf064422b1f79f4cdb00be1d8/zlib.parsed">zlib.parsed</a></p>
@@ -1320,11 +1320,11 @@ These payloads have their own 4-byte little-endian size header.</p>
 
 <p>See <a href="https://github.com/featherbear/bitfocus-companion-module-presonus-studiolive-iii">github.com/featherbear/bitfocus-companion-module-presonus-studiolive-iii</a></p>
 
-<p>![https://featherbear.cc/blog/post/presonus-studiolive-api-ii/98021270-3d570300-1e58-11eb-89ce-71829c3da021.gif]</p>
+<p><img src="https://featherbear.cc/blog/post/presonus-studiolive-api-ii/98021270-3d570300-1e58-11eb-89ce-71829c3da021.gif" alt="" /></p>
 <h2 id='console-advertisement-utility'>Console Advertisement Utility</h2>
 <p>Experimental tool to spoof a discovery packet, so that <a href="https://www.presonus.com/products/uc-surface">UC Surface</a> can &#39;find&#39; consoles that live on difficult network topologies</p>
 
-<p><a href="https://github.com/featherbear/presonus-studiolive-console-advertisement">github.com/featherbear/presonus-studiolive-console-advertisement</a></p>
+<p>See <a href="https://github.com/featherbear/presonus-studiolive-console-advertisement">github.com/featherbear/presonus-studiolive-console-advertisement</a></p>
 
 <p><a name="99-licensemd"></a></p>
 <h1 id='license'>License</h1>
