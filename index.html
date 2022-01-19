@@ -308,15 +308,6 @@
             <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#import-convention" class="toc-h2 toc-link" data-title="Import Convention">Import Convention</a>
-                  </li>
-                  <li>
-                    <a href="#discovery" class="toc-h2 toc-link" data-title="Discovery">Discovery</a>
-                  </li>
-                  <li>
-                    <a href="#client" class="toc-h2 toc-link" data-title="Client">Client</a>
-                  </li>
-                  <li>
                     <a href="#events" class="toc-h2 toc-link" data-title="Events">Events</a>
                   </li>
                   <li>
@@ -376,17 +367,36 @@
 </ul>
 
 <p><a name="20-apimd"></a></p>
-<h1 id='api'>API</h1><h2 id='import-convention'>Import Convention</h2>
+<h1 id='api'>API</h1>
+<p><a name="21-clientmd"></a></p>
+
 <blockquote>
 <p>ES5</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Client</span><span class="p">,</span> <span class="nx">MessageTypes</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Client</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>ES6</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
-</span></code></pre></div><h2 id='discovery'>Discovery</h2>
+</span></code></pre></div>
+<ul>
+<li><p><code>new Client(host: string, port: number = 53000)</code><br>
+Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p></li>
+<li><p><code>&lt;Client&gt;.connect()</code><br>
+Connect to the console</p></li>
+<li><p><code>&lt;Client&gt;.listen()</code><br>
+Start the metering server</p></li>
+<li><p><code>&lt;Client&gt;.stop()</code><br>
+Stop the metering server</p></li>
+<li><p><code>&lt;Client&gt;.setUDPServerPort(port: int)</code><br>
+Set the listen port of the metering server.<br>
+Can only be run while the metering server is not running</p></li>
+<li><p><code>&lt;Client&gt;.on(evtName: str, fn: function)</code><br>
+Listen for <code>evtName</code> events that will call <code>fn</code></p></li>
+<li><p><code>&lt;Client&gt;.discover()</code></p></li>
+</ul>
+
 <blockquote>
 <p>ES5</p>
 </blockquote>
@@ -434,23 +444,7 @@
  <span class="c1">// Discover for 10 seconds</span>
 <span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
-<hr>
-<h2 id='client'>Client</h2>
-<ul>
-<li><p><code>new Client(host: int, port: int)</code><br>
-Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p></li>
-<li><p><code>&lt;Client&gt;.connect()</code><br>
-Connect to the console</p></li>
-<li><p><code>&lt;Client&gt;.listen()</code><br>
-Start the metering server</p></li>
-<li><p><code>&lt;Client&gt;.stop()</code><br>
-Stop the metering server</p></li>
-<li><p><code>&lt;Client&gt;.setUDPServerPort(port: int)</code><br>
-Set the listen port of the metering server.<br>
-Can only be run while the metering server is not running</p></li>
-<li><p><code>&lt;Client&gt;.on(evtName: str, fn: function)</code><br>
-Listen for <code>evtName</code> events that will call <code>fn</code></p></li>
-</ul>
+<p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2>
 <p>Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  </p>
 <h3 id='protocol-events'>Protocol Events</h3>
@@ -479,6 +473,8 @@ Sends a packet to the server, messageCode is a two byte long string.<br>
 <code>customB</code> is an optional single byte character  </p></li>
 <li><p><code>client.conn</code> =&gt; TCP socket connection</p></li>
 </ul>
+
+<p><a name="23-meteringmd"></a></p>
 <h2 id='metering'>Metering</h2>
 <p>Metering is currently unavailable in the Node.js version --&gt;</p>
 
@@ -878,7 +874,7 @@ Example decoded payload: <a href="https://github.com/featherbear/presonus-studio
 
 <p>For most responses, <code>partA</code> is <code>0x00 0x00</code>, and <code>partB</code> is appended.<br>
 However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x01</code> and <code>partB</code> is omitted.</p>
-<h3 id='discovery-2'>Discovery</h3>
+<h3 id='discovery'>Discovery</h3>
 <p><strong>Note: Discovery packets do not follow the standard packet packing format</strong></p>
 
 <blockquote>
