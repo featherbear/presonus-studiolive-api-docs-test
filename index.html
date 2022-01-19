@@ -348,6 +348,20 @@
               </ul>
           </li>
           <li>
+            <a href="#demo-code" class="toc-h1 toc-link" data-title="Demo Code">Demo Code</a>
+          </li>
+          <li>
+            <a href="#other" class="toc-h1 toc-link" data-title="Other">Other</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#bitfocus-companion" class="toc-h2 toc-link" data-title="Bitfocus Companion">Bitfocus Companion</a>
+                  </li>
+                  <li>
+                    <a href="#console-advertisement-utility" class="toc-h2 toc-link" data-title="Console Advertisement Utility">Console Advertisement Utility</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#license" class="toc-h1 toc-link" data-title="License">License</a>
           </li>
       </ul>
@@ -367,11 +381,11 @@
 <li>StudioLive 24R Rack Mixer</li>
 </ul>
 
-<p>Read more <a href="https://featherbear.cc/presonus-studiolive-api/">here</a></p>
+<p>Read more <a href="https://featherbear.cc/blog/post/presonus-studiolive-api-iii-jan22/">here</a></p>
 
 <p><a name="10-installationmd"></a></p>
 <h1 id='installation'>Installation</h1>
-<p>This node package is only hosted on GitHub, however you can install packages from <code>npm</code> and <code>yarn</code> in the same fashion as any other package.</p>
+<p>This node.js package is only hosted on <a href="https://github.com/featherbear/presonus-studiolive-api/">GitHub</a>, however you can install packages from <code>npm</code> and <code>yarn</code> in the same way as you would with any other package.</p>
 
 <ul>
 <li><code>npm install featherbear/presonus-studiolive#v1.0.5</code></li>
@@ -405,20 +419,20 @@
 </tbody></table>
 
 <p>Used during connection to configure client identity</p>
-<h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+<h3 id='enum-messagetypes'>enum:<code>MESSAGETYPES</code></h3><div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span>
 
-// ...
+<span class="c1">// ...</span>
 
-client.on(MESSAGETYPES.JSON, (evt) =&gt; {
-    // ...
-})
+<span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">JSON</span><span class="p">,</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">})</span>
 
-// or
+<span class="c1">// or</span>
 
-client.on("JM", (evt) =&gt; {
-    // ...
-})
-</span></code></pre></div>
+<span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">JM</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">})</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th style="text-align: center">Name</th>
@@ -831,6 +845,10 @@ Request list resource</li>
 
 <p><a name="30-researchmd"></a></p>
 <h1 id='research'>Research</h1>
+<p>Protocol research was performed on a StudioLive Series III 16R rack mixer, StudioLive Series III 24R rack mixer and a StudioLive Series III 16 console, using the <a href="https://www.presonus.com/products/uc-surface">UC Surface</a> application on Android and Windows. </p>
+
+<p>Old Python code: <a href="https://github.com/featherbear/presonus-studiolive-api/tree/research_python">github.com/featherbear/presonus-studiolive-api/tree/research_python</a></p>
+
 <p><a name="31-packetmd"></a></p>
 <h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
 <p>All packets start with the four bytes <code>\x55\x43\x00\x01</code> (UC..)</p>
@@ -1285,6 +1303,27 @@ permissions/eq_dyn
 permissions/geq
 permissions/fx
 permissions/groups</p>
+
+<p><a name="40-demomd"></a></p>
+<h1 id='demo-code'>Demo Code</h1>
+<p>For demo projects refer to the below repositories</p>
+
+<ul>
+<li><a href="https://github.com/featherbear/presonus-studiolive-api-demo">github.com/featherbear/presonus-studiolive-api-demo</a></li>
+<li><a href="https://github.com/featherbear/SL-Edit">github.com/featherbear/SL-Edit</a></li>
+</ul>
+
+<p><a name="50-othermd"></a></p>
+<h1 id='other'>Other</h1><h2 id='bitfocus-companion'>Bitfocus Companion</h2>
+<p>An experimental <a href="https://bitfocus.io/companion/">Bitfocus Companion</a> module has been developed to integrate the PreSonus StudioLive API.</p>
+
+<p>See <a href="https://github.com/featherbear/bitfocus-companion-module-presonus-studiolive-iii">github.com/featherbear/bitfocus-companion-module-presonus-studiolive-iii</a></p>
+
+<p>![https://featherbear.cc/blog/post/presonus-studiolive-api-ii/98021270-3d570300-1e58-11eb-89ce-71829c3da021.gif]</p>
+<h2 id='console-advertisement-utility'>Console Advertisement Utility</h2>
+<p>Experimental tool to spoof a discovery packet, so that <a href="https://www.presonus.com/products/uc-surface">UC Surface</a> can &#39;find&#39; consoles that live on difficult network topologies</p>
+
+<p><a href="https://github.com/featherbear/presonus-studiolive-console-advertisement">github.com/featherbear/presonus-studiolive-console-advertisement</a></p>
 
 <p><a name="99-licensemd"></a></p>
 <h1 id='license'>License</h1>
