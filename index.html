@@ -569,14 +569,25 @@ Connect to the console</p>
 Disconnect from the console</p>
 
 <p><code>&lt;Client&gt;.mute(selector: ChannelSelector)</code><br>
-<code>&lt;Client&gt;.unmute(selector: ChannelSelector)</code><br>
-<code>&lt;Client&gt;.toggleMute(selector: ChannelSelector)</code>  </p>
+Mute a channel</p>
+
+<p><code>&lt;Client&gt;.unmute(selector: ChannelSelector)</code><br>
+Unmute a channel</p>
+
+<p><code>&lt;Client&gt;.toggleMute(selector: ChannelSelector)</code><br>
+Toggle the mute status of a channel</p>
 
 <p><code>&lt;Client&gt;.setChannelVolumeDb(selector: ChannelSelector, decibel: number, duration?: number)</code><br>
-<code>&lt;Client&gt;.setChannelVolumeLinear(selector: ChannelSelector, linearLevel: number, duration?: number)</code>  </p>
+Set the level of a channel to a certain decibel (between <code>-84</code> and <code>10</code>).<br>
+Optionally provide a <code>duration</code> (in milliseconds) to set the transition time.</p>
+
+<p><code>&lt;Client&gt;.setChannelVolumeLinear(selector: ChannelSelector, linearLevel: number, duration?: number)</code><br>
+Set the level of a channel to a certain percentage (between <code>0</code> and <code>100</code>).<br>
+Optionally provide a <code>duration</code> (in milliseconds) to set the transition time.</p>
 
 <p><code>&lt;Client&gt;.on(evtName: str, fn: function)</code><br>
-Listen for <code>evtName</code> events that will call <code>fn</code></p>
+Attach a handler function <code>fn</code> to an event given by <code>evtName</code>.<br>
+See <a href="#events">Events</a></p>
 
 <p><a name="23-meteringmd"></a></p>
 <h2 id='metering'>Metering</h2>
