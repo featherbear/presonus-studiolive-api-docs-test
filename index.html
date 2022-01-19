@@ -303,7 +303,13 @@
           </li>
           <li>
             <a href="#installation" class="toc-h1 toc-link" data-title="Installation">Installation</a>
+          </li>
+          <li>
+            <a href="#documentation" class="toc-h1 toc-link" data-title="Documentation">Documentation</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#client-api" class="toc-h2 toc-link" data-title="Client API">Client API</a>
+                  </li>
                   <li>
                     <a href="#events" class="toc-h2 toc-link" data-title="Events">Events</a>
                   </li>
@@ -312,6 +318,12 @@
                   </li>
                   <li>
                     <a href="#metering" class="toc-h2 toc-link" data-title="Metering">Metering</a>
+                  </li>
+                  <li>
+                    <a href="#discovery" class="toc-h2 toc-link" data-title="Discovery">Discovery</a>
+                  </li>
+                  <li>
+                    <a href="#standalone-discovery" class="toc-h2 toc-link" data-title="Standalone Discovery">Standalone Discovery</a>
                   </li>
               </ul>
           </li>
@@ -362,6 +374,39 @@
 <li><code>npm install featherbear/presonus-studiolive#v1.0.5</code></li>
 <li><code>yarn add featherbear/presonus-studiolive#v1.0.5</code></li>
 </ul>
+
+<p><a name="20-documentationmd"></a></p>
+<h1 id='documentation'>Documentation</h1>
+<p><a name="21-client-apimd"></a></p>
+<h2 id='client-api'>Client API</h2>
+<blockquote>
+<p>ES5</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Client</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>ES6</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+</span></code></pre></div>
+<p><code>new Client(host: string, port: number = 53000)</code><br>
+Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p>
+
+<p><code>&lt;Client&gt;.connect(subscribeData?: SubscriptionOptions)</code><br>
+Connect to the console</p>
+
+<p><code>&lt;Client&gt;.close()</code><br>
+Disconnect from the console</p>
+
+<p><code>&lt;Client&gt;.mute(selector: ChannelSelector)</code><br>
+<code>&lt;Client&gt;.unmute(selector: ChannelSelector)</code><br>
+<code>&lt;Client&gt;.toggleMute(selector: ChannelSelector)</code>  </p>
+
+<p><code>&lt;Client&gt;.setChannelVolumeDb(selector: ChannelSelector, decibel: number, duration?: number)</code><br>
+<code>&lt;Client&gt;.setChannelVolumeLinear(selector: ChannelSelector, linearLevel: number, duration?: number)</code>  </p>
+
+<p><code>&lt;Client&gt;.on(evtName: str, fn: function)</code><br>
+Listen for <code>evtName</code> events that will call <code>fn</code></p>
 
 <p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2>
@@ -423,6 +468,79 @@ Stop the metering server</p></li>
 
 <hr>
 
+<p><a name="24-internalmd"></a></p>
+
+<ul>
+<li><code>&lt;Client&gt;.sendList(key)</code>
+Request list resource</li>
+</ul>
+
+<p><a name="25-discoverymd"></a></p>
+<h2 id='discovery'>Discovery</h2>
+<p><code>&lt;Client&gt;.discover(timeout: number = 10 * 1000)</code></p>
+
+<p>Perform a console discovery for <code>timeout</code> milliseconds, returns an array containing the devices found within the discovery period</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Discover for 30 seconds</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">discover</span><span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">devices</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">device</span> <span class="k">of</span> <span class="nx">devices</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// device.name</span>
+        <span class="c1">// device.serial</span>
+        <span class="c1">// device.ip</span>
+        <span class="c1">// device.port</span>
+        <span class="c1">// device.timestamp</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">device</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div>
+<hr>
+<h2 id='standalone-discovery'>Standalone Discovery</h2>
+<blockquote>
+<p>ES5</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>ES6</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Discovery</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api
+</span></code></pre></div>
+<p>If you only want to search for devices on the network without the intention of connecting to them, you can run the discovery client independently.</p>
+
+<ul>
+<li>Instantiate the client
+
+<ul>
+<li><code>new Discovery()</code></li>
+</ul></li>
+<li>Attach <code>discover</code> event handler
+
+<ul>
+<li><code>&lt;Client&gt;.on(&#39;discover&#39;, Function&lt;DiscoveryType&gt;)</code></li>
+</ul></li>
+<li>Listen for discovery events (optional timeout)
+
+<ul>
+<li><code>&lt;Client&gt;.start(timeout?: ms)</code></li>
+</ul></li>
+</ul>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="nx">discoveryClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Discovery</span><span class="p">()</span>
+
+<span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">discover</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">(</span><span class="nx">device</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// device.name</span>
+    <span class="c1">// device.serial</span>
+    <span class="c1">// device.ip</span>
+    <span class="c1">// device.port</span>
+    <span class="c1">// device.timestamp</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">// Discover indefinitely</span>
+<span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+
+ <span class="c1">// Discover for 10 seconds</span>
+<span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
 <p><a name="30-researchmd"></a></p>
 <h1 id='research'>Research</h1>
 <p><a name="31-packetmd"></a></p>
@@ -800,7 +918,7 @@ Example decoded payload: <a href="https://github.com/featherbear/presonus-studio
 
 <p>For most responses, <code>partA</code> is <code>0x00 0x00</code>, and <code>partB</code> is appended.<br>
 However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x01</code> and <code>partB</code> is omitted.</p>
-<h3 id='discovery'>Discovery</h3>
+<h3 id='discovery-2'>Discovery</h3>
 <p><strong>Note: Discovery packets do not follow the standard packet packing format</strong></p>
 
 <blockquote>
