@@ -320,6 +320,9 @@
                     <a href="#metering" class="toc-h2 toc-link" data-title="Metering">Metering</a>
                   </li>
                   <li>
+                    <a href="#device-state" class="toc-h2 toc-link" data-title="Device State">Device State</a>
+                  </li>
+                  <li>
                     <a href="#discovery" class="toc-h2 toc-link" data-title="Discovery">Discovery</a>
                   </li>
                   <li>
@@ -576,23 +579,27 @@
 <p>If <code>type</code> is <code>MAIN</code> or <code>TALKBACK</code>, then the value of <code>channel</code> will be implicitly set to <code>1</code></p>
 
 <p><a name="22-eventsmd"></a></p>
-<h2 id='events'>Events</h2>
-<p>Events are split into data events and lifecycle events.  </p>
-
-<ul>
-<li>Callbacks / handlers can be applied onto specific events, given by their <a href="#enum-MESSAGETYPES">message type</a>.</li>
-<li>To listen to <strong>all events</strong>, you can listen to the <code>data</code> event</li>
-<li>To listen to <strong>meter events</strong>, you can listen to the <code>meter</code> event (see <a href="#metering">Metering</a>)</li>
-</ul>
-<div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
+<h2 id='events'>Events</h2><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
 <span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">Setting</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
 <span class="p">})</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
+</code></pre></div>
+<blockquote>
+<p>or</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
 <span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">PV</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
 <span class="p">})</span>
-</code></pre></div><h3 id='lifecycle-events'>Lifecycle Events</h3>
+</code></pre></div>
+<p>Events are split into data events and lifecycle events.  </p>
+
+<ul>
+<li>Callbacks / handlers can be applied onto specific events, given by their <a href="#enum-messagetypes">message type</a>.</li>
+<li>To listen to <strong>all events</strong>, you can listen to the <code>data</code> event</li>
+<li>To listen to <strong>meter events</strong>, you can listen to the <code>meter</code> event (see <a href="#metering">Metering</a>)</li>
+</ul>
+<h3 id='lifecycle-events'>Lifecycle Events</h3>
 <ul>
 <li>To trigger a function when client has successfully connected to the console, listen to the <code>connected</code> event</li>
 </ul>
@@ -609,11 +616,39 @@
 </blockquote>
 <div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span><span class="p">,</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
 </span></code></pre></div>
+<blockquote>
+<p>Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+
+// Also import some enums
+import { MESSAGETYPE, CHANNELS } from </span><span class="dl">'</span><span class="nx">presonus</span><span class="o">-</span><span class="nx">studiolive</span><span class="o">-</span><span class="nx">api</span><span class="s2">`
+
+const client = new Client("10.0.0.18", 53000)
+client.connect({
+    clientDescription: 'Console Remote'
+}).then(() =&gt; {
+
+    // Set channel 1 fader to -6 dB
+    client.setChannelVolumeDb({
+        type: 'LINE',
+        channel: CHANNELS.LINE.CHANNEL_1
+    }, -6)
+
+    // Mute channel 2
+    client.mute({
+        type: 'LINE',
+        channel: CHANNELS.LINE.CHANNEL_2
+    })
+
+    console.log(`</span><span class="nx">Mixer</span> <span class="nx">version</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_version</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`)
+})
+</span></code></pre></div>
 <p><code>new Client(host: string, port: number = 53000)</code><br>
-Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p>
+Creates a Client object that will later connect to the console</p>
 
 <p><code>&lt;Client&gt;.connect(subscribeData?: SubscriptionOptions)</code><br>
-Connect to the console</p>
+Connect to the console. See <a href="#payload-subscriptionoptions">SubscriptionOptions</a></p>
 
 <p><code>&lt;Client&gt;.close()</code><br>
 Disconnect from the console</p>
@@ -654,12 +689,15 @@ Stop the metering server</p>
 <span class="p">})</span>
 <span class="nx">client</span><span class="p">.</span><span class="nx">meterSubscribe</span><span class="p">()</span>
 </code></pre></div>
-<p><a name="24-internalmd"></a></p>
+<p><a name="24-device-statemd"></a></p>
+<h2 id='device-state'>Device State</h2><div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">global.mixer_name</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">line.ch1.mute</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div>
+<p><code>&lt;Client&gt;.state.get(key)</code><br>
+Get a device state given by its <code>key</code>.  </p>
 
-<ul>
-<li><code>&lt;Client&gt;.sendList(key)</code>
-Request list resource</li>
-</ul>
+<p>This function is used internally by other methods, but can be accessed by the user to extract other data that might not yet be used.<br>
+Refer to the <a href="https://github.com/featherbear/presonus-studiolive-api/blob/documentation/zlib.parsed"><code>zlib.parsed</code></a> file, or the IntelliSense information at <code>&lt;Client&gt;.state._data</code> for known keys .</p>
 
 <p><a name="25-discoverymd"></a></p>
 <h2 id='discovery'>Discovery</h2>
@@ -727,6 +765,13 @@ Request list resource</li>
  <span class="c1">// Discover for 10 seconds</span>
 <span class="nx">discoveryClient</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
+<p><a name="26-internalmd"></a></p>
+
+<ul>
+<li><code>&lt;Client&gt;.sendList(key)</code>
+Request list resource</li>
+</ul>
+
 <p><a name="30-researchmd"></a></p>
 <h1 id='research'>Research</h1>
 <p><a name="31-packetmd"></a></p>
