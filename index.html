@@ -528,30 +528,24 @@
 <p><a name="22-eventsmd"></a></p>
 <h2 id='events'>Events</h2>
 <p>Events are split into data events and lifecycle events.  </p>
-<h3 id='data-events'>Data Events</h3>
-<table><thead>
-<tr>
-<th style="text-align: center">Event Name</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-</tbody></table>
 
 <ul>
-<li><code>Hello</code></li>
-<li><code>JSON</code></li>
-<li><code>Setting</code></li>
-<li><code>Settings2</code></li>
-<li><code>FileResource</code></li>
-<li><code>FileResource2</code></li>
-<li><code>CompressedUnknown</code></li>
-<li><p><code>meter</code></p>
-<h3 id='lifecycle-events'>Lifecycle Events</h3></li>
-<li><p><code>connected</code> - Emitted when the client has successfully connected to the console</p></li>
+<li>Callbacks / handlers can be applied onto specific events, given by their <a href="#enum-MESSAGETYPES">message type</a>.</li>
+<li>To listen to all events, you can listen to the <code>data</code> event</li>
+<li>To listen to meter events, you can listen to the <code>meter</code> event</li>
 </ul>
-
-<!-- * `listening` - Emitted when the client has successfully started the meter server
-* `meter` | `meterData` - Emitted when metering data is received -->
+<div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
+<span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">Setting</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
+<span class="o">&lt;</span><span class="nx">Client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">PV</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">})</span><span class="o">&gt;</span>
+</code></pre></div><h3 id='lifecycle-events'>Lifecycle Events</h3>
+<ul>
+<li><code>connected</code> - Emitted when the client has successfully connected to the console</li>
+</ul>
 
 <p><a name="23-client-apimd"></a></p>
 <h2 id='client-api'>Client API</h2>
