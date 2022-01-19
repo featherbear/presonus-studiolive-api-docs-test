@@ -299,48 +299,49 @@
       <img src="images/logo-1e815a84.png" class="logo" alt="" />
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#unofficial-presonus-studiolive-iii-api" class="toc-h2 toc-link" data-title="Unofficial PreSonus StudioLive III API">Unofficial PreSonus StudioLive III API</a>
-                  </li>
-              </ul>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#packet" class="toc-h1 toc-link" data-title="PACKET">PACKET</a>
+            <a href="#installation" class="toc-h1 toc-link" data-title="Installation">Installation</a>
+          </li>
+          <li>
+            <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
+          </li>
+          <li>
+            <a href="#research" class="toc-h1 toc-link" data-title="Research">Research</a>
               <ul class="toc-list-h2">
-                  <li>
-                    <a href="#presonus-studiolive-iii-packet-research" class="toc-h2 toc-link" data-title="PreSonus StudioLive III | Packet Research">PreSonus StudioLive III | Packet Research</a>
-                  </li>
                   <li>
                     <a href="#general" class="toc-h2 toc-link" data-title="General">General</a>
                   </li>
                   <li>
                     <a href="#response-packets" class="toc-h2 toc-link" data-title="Response Packets">Response Packets</a>
                   </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#protocol" class="toc-h1 toc-link" data-title="PROTOCOL">PROTOCOL</a>
-              <ul class="toc-list-h2">
                   <li>
-                    <a href="#presonus-studiolive-iii-protocol-research" class="toc-h2 toc-link" data-title="PreSonus StudioLive III | Protocol Research">PreSonus StudioLive III | Protocol Research</a>
+                    <a href="#protocol-research" class="toc-h2 toc-link" data-title="Protocol Research">Protocol Research</a>
+                  </li>
+                  <li>
+                    <a href="#values-2" class="toc-h2 toc-link" data-title="Values">Values</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#values-2" class="toc-h1 toc-link" data-title="VALUES">VALUES</a>
+            <a href="#license" class="toc-h1 toc-link" data-title="License">License</a>
           </li>
       </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='api'>API</h1><h2 id='unofficial-presonus-studiolive-iii-api'>Unofficial PreSonus StudioLive III API</h2>
+        <p><a name="00-introductionmd"></a></p>
+<h1 id='introduction'>Introduction</h1>
 <blockquote>
 <p>A Node.js API to interface with PreSonus&#39; StudioLive III consoles over the network. Read more <a href="https://featherbear.cc/presonus-studiolive-api/">here</a></p>
 </blockquote>
 
+<p><a name="10-installationmd"></a></p>
+<h1 id='installation'>Installation</h1>
+<p><a name="20-apimd"></a></p>
+<h1 id='api'>API</h1>
 <hr>
 
 <p>Page currently under construction</p>
@@ -349,7 +350,7 @@
 
 `const { Client, MessageTypes } = require('presonus-studiolive-api')`
 
-## Documentation
+# Documentation
 
 * `new Client(host: int, port: int)`  
 Creates a Client object that will later connect to the console at `host`:`port`
@@ -373,11 +374,11 @@ Listen for `evtName` events that will call `fn`
 * `client.sendList(path: str)`  
 Request `path` from the console
 
-### Events
+## Events
 
 Events are split into Protocol Events (event codes that are part of the protocol), and custom events defined by this API.  
 
-#### Protocol Events
+### Protocol Events
 
 * `Hello`
 * `JSON`
@@ -387,13 +388,13 @@ Events are split into Protocol Events (event codes that are part of the protocol
 * `FileResource2`
 * `CompressedUnknown`
 
-#### Custom Events
+### Custom Events
 
 * `connected` - Emitted when the client has successfully connected to the console
 * `listening` - Emitted when the client has successfully started the meter server
 * `meter` | `meterData` - Emitted when metering data is received
 
-### Low(er) level access
+## Low(er) level access
 
 * `client.emit(evtName: str, ...data)`  
 Emits an event for `evtName` with `data`
@@ -405,7 +406,7 @@ Sends a packet to the server, messageCode is a two byte long string.
 
 * `client.conn` => TCP socket connection
 
-### Metering
+## Metering
 
 Metering is currently unavailable in the Node.js version -->
 
@@ -427,15 +428,12 @@ Metering is currently unavailable in the Node.js version -->
 ``` -->
 
 <hr>
-<h3 id='license'>License</h3>
-<p>Copyright © 2019 - 2022 <a href="https://featherbear.cc">Andrew Wong</a>  </p>
 
-<p>This software is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.<br>
-You are free to redistribute it and/or modify it under the <a href="https://opensource.org/licenses/MIT">terms</a> of the <a href="https://opensource.org/licenses/MIT">license</a>.</p>
-<h1 id='packet'>PACKET</h1>
+<p><a name="30-researchmd"></a></p>
+<h1 id='research'>Research</h1>
+<p><a name="31-packetmd"></a></p>
+
 <p>[UC Surface]: https://www.presonus.com/products/UC-Surface</p>
-<h2 id='presonus-studiolive-iii-packet-research'>PreSonus StudioLive III | Packet Research</h2>
-<hr>
 <h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
 <p>All packets start with the four bytes <code>\x55\x43\x00\x01</code> (UC..)</p>
 <h3 id='payload-types'>Payload Types</h3>
@@ -853,10 +851,12 @@ However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x0
 </code></pre></div>
 <p>or</p>
 <div class="highlight"><pre class="highlight plaintext"><code>55 43 00 01 00 00 44 51 00 00 65 00  UC....DQ..e.
-</code></pre></div><h1 id='protocol'>PROTOCOL</h1><h2 id='presonus-studiolive-iii-protocol-research'>PreSonus StudioLive III | Protocol Research</h2>
+</code></pre></div>
+<p><a name="32-protocolmd"></a></p>
+<h2 id='protocol-research'>Protocol Research</h2>
 <!-- 
 
-### Overview
+## Overview
 
 Discovery Broadcast - every 3 seconds
 KeepAlive - every n second ???
@@ -867,7 +867,9 @@ UDP packets metering, discovery
 TCP for control
 
 -->
-<h1 id='values-2'>VALUES</h1>
+
+<p><a name="33-valuesmd"></a></p>
+<h2 id='values-2'>Values</h2>
 <p>Listpresets/channel</p>
 
 <p>/// 
@@ -885,6 +887,13 @@ permissions/eq_dyn
 permissions/geq
 permissions/fx
 permissions/groups</p>
+
+<p><a name="99-licensemd"></a></p>
+<h1 id='license'>License</h1>
+<p>Copyright © 2019 - 2022 <a href="https://featherbear.cc">Andrew Wong</a>  </p>
+
+<p>This software is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.<br>
+You are free to redistribute it and/or modify it under the <a href="https://opensource.org/licenses/MIT">terms</a> of the <a href="https://opensource.org/licenses/MIT">license</a>.</p>
 
       </div>
       <div class="dark-box">
