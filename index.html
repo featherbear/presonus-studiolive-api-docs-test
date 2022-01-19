@@ -552,12 +552,12 @@
 <blockquote>
 <p>ES5</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Client</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Client</span><span class="p">,</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">presonus-studiolive-api</span><span class="dl">'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>ES6</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
+<div class="highlight"><pre class="highlight javascript"><code><span class="k">import</span> <span class="nx">Client</span><span class="p">,</span> <span class="p">{</span> <span class="nx">MESSAGETYPES</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">presonus-studiolive-api`
 </span></code></pre></div>
 <p><code>new Client(host: string, port: number = 53000)</code><br>
 Creates a Client object that will later connect to the console at <code>host</code>:<code>port</code></p>
