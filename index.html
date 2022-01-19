@@ -503,6 +503,56 @@
 <td style="text-align: left">Fader position packet</td>
 </tr>
 </tbody></table>
+
+<p>Payloads emitted from these events are of various data types</p>
+<h3 id='type-meterdata'>type:<code>MeterData</code></h3>
+<ul>
+<li><code>input</code> - <code>number[]</code> - Input channel meters</li>
+<li><code>mainMixFaders</code> - <code>number[]</code> - Main mix channel meters</li>
+<li><code>main</code> - Main mix meters</li>
+<li><code>aux_metering</code> - <code>number[]</code> - Auxiliary bus meters</li>
+<li><code>channelStrip</code> - Signal processor meters
+
+<ul>
+<li><code>stripA</code> - <code>number[]</code></li>
+<li><code>stripB</code> - <code>number[]</code></li>
+<li><code>stripC</code> - <code>number[]</code></li>
+<li><code>stripD</code> - <code>number[]</code></li>
+<li><code>stripE</code> - <code>number[]</code></li>
+</ul></li>
+<li><code>aux_chstrip</code> - Auxiliary bus signal processor meters
+
+<ul>
+<li><code>stripA</code> - <code>number[]</code></li>
+<li><code>stripB</code> - <code>number[]</code></li>
+<li><code>stripC</code> - <code>number[]</code></li>
+<li><code>stripD</code> - <code>number[]</code></li>
+</ul></li>
+<li><code>main_chstrip</code> - Main mix signal processor meters
+
+<ul>
+<li><code>stageA</code> - <code>number[]</code></li>
+<li><code>stageB</code> - <code>number[]</code></li>
+<li><code>stageC</code> - <code>number[]</code></li>
+<li><code>stageD</code> - <code>number[]</code></li>
+</ul></li>
+<li><code>fx_chstrip</code> - FX bus signal processor meters
+
+<ul>
+<li><code>inputs</code> - <code>number[]</code></li>
+<li><code>stripA</code> - <code>number[]</code></li>
+<li><code>stripB</code> - <code>number[]</code></li>
+<li><code>stripC</code> - <code>number[]</code></li>
+</ul></li>
+<li><code>fxreturn_strip</code> - FX bus return signal processor meters
+
+<ul>
+<li><code>input</code> - <code>number[]</code></li>
+<li><code>stripA</code> - <code>number[]</code></li>
+<li><code>stripB</code> - <code>number[]</code></li>
+<li><code>stripC</code> - <code>number[]</code></li>
+</ul></li>
+</ul>
 <h3 id='type-channelselector'>type:<code>ChannelSelector</code></h3>
 <table><thead>
 <tr>
@@ -531,20 +581,20 @@
 
 <ul>
 <li>Callbacks / handlers can be applied onto specific events, given by their <a href="#enum-MESSAGETYPES">message type</a>.</li>
-<li>To listen to all events, you can listen to the <code>data</code> event</li>
-<li>To listen to meter events, you can listen to the <code>meter</code> event</li>
+<li>To listen to <strong>all events</strong>, you can listen to the <code>data</code> event</li>
+<li>To listen to <strong>meter events</strong>, you can listen to the <code>meter</code> event (see <a href="#metering">Metering</a>)</li>
 </ul>
 <div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
 <span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">MESSAGETYPES</span><span class="p">.</span><span class="nx">Setting</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript"><code><span class="c1">// Listen for changes to settings</span>
-<span class="o">&lt;</span><span class="nx">Client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">PV</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="o">&lt;</span><span class="nx">Client</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">PV</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
-<span class="p">})</span><span class="o">&gt;</span>
+<span class="p">})</span>
 </code></pre></div><h3 id='lifecycle-events'>Lifecycle Events</h3>
 <ul>
-<li><code>connected</code> - Emitted when the client has successfully connected to the console</li>
+<li>To trigger a function when client has successfully connected to the console, listen to the <code>connected</code> event</li>
 </ul>
 
 <p><a name="23-client-apimd"></a></p>
@@ -591,34 +641,19 @@ See <a href="#events">Events</a></p>
 
 <p><a name="23-meteringmd"></a></p>
 <h2 id='metering'>Metering</h2>
-<ul>
-<li><p><code>&lt;Client&gt;.meterSubscribe(port?: number)</code><br>
-Start the metering server</p></li>
-<li><p><code>&lt;Client&gt;.stop()</code><br>
-Stop the metering server</p></li>
-</ul>
+<p><code>&lt;Client&gt;.on(&#39;meter&#39;, Function&lt;MeterData&gt;)</code><br>
+Listen to meter events</p>
 
-<p>Metering is currently unavailable in the Node.js version</p>
+<p><code>&lt;Client&gt;.meterSubscribe(port?: number)</code><br>
+Start the metering server</p>
 
-<!-- Metering data is stored as a dictionary -->
-
-<!-- ```
-{
-  input: [..., ..., ... /* 32 */], // Input signal
-  chain1input: input
-  chain1output: [..., ..., ... /* 32 */], // First FX chain
-  chain2input: chain1output,
-  chain2output: [..., ..., ... /* 32 */], // Second FX chain
-  chain3input: chain2output,
-  chain3output: [..., ..., ... /* 32 */], // Third FX chain
-  chain4input: chain3output,
-  chain4output: [..., ..., ... /* 32 */], // Fourth FX chain
-  level: chain4output
-}
-``` -->
-
-<hr>
-
+<p><code>&lt;Client&gt;.stop()</code><br>
+Stop the metering server</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">meter</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">metering</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">metering</span><span class="p">.</span><span class="nx">input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">})</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">meterSubscribe</span><span class="p">()</span>
+</code></pre></div>
 <p><a name="24-internalmd"></a></p>
 
 <ul>
@@ -695,8 +730,6 @@ Request list resource</li>
 <p><a name="30-researchmd"></a></p>
 <h1 id='research'>Research</h1>
 <p><a name="31-packetmd"></a></p>
-
-<p>[UC Surface]: https://www.presonus.com/products/UC-Surface</p>
 <h2 id='general'>General</h2><h3 id='packet-headers'>Packet Headers</h3>
 <p>All packets start with the four bytes <code>\x55\x43\x00\x01</code> (UC..)</p>
 <h3 id='payload-types'>Payload Types</h3>
@@ -1105,7 +1138,7 @@ However, for keys related to filter groups, <code>partA</code> is <code>0x00 0x0
 </tr>
 </tbody></table>
 
-<p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in [UC Surface]. The second instance appears to be some sort of friendly name</p>
+<p>*The first &quot;StudioLLive 24R&quot; is used to identify the icon in <a href="https://www.presonus.com/products/UC-Surface">UC Surface</a>. The second instance appears to be some sort of friendly name</p>
 
 <blockquote>
 <p>When a client (Universal Control, etc) receives this broadcast, it will attempt to communicate with the console</p>
